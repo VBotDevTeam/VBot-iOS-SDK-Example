@@ -1,0 +1,328 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.9 effective-4.2 (swiftlang-5.9.0.128.108 clang-1500.0.40.1)
+// swift-module-flags: -target arm64-apple-ios13.5 -enable-objc-interop -enable-library-evolution -swift-version 4.2 -enforce-exclusivity=checked -O -module-name VBotPhoneSDK
+// swift-module-flags-ignorable: -enable-bare-slash-regex
+import AVKit
+import CallKit
+import CocoaLumberjack
+import CoreTelephony
+import Foundation
+import PushKit
+import SDWebImage
+import SQLite3
+import Swift
+import SystemConfiguration
+import UIKit
+import UserNotifications
+@_exported import VBotPhoneSDK
+import VBotSIP
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public struct VBotHotline : Swift.Codable {
+  public let name: Swift.String, phoneNumber: Swift.String
+  public func encode(to encoder: any Swift.Encoder) throws
+  public init(from decoder: any Swift.Decoder) throws
+}
+@_hasMissingDesignatedInitializers open class NetworkReachabilityManager {
+  public enum NetworkReachabilityStatus {
+    case unknown
+    case notReachable
+    case reachable(VBotPhoneSDK.NetworkReachabilityManager.NetworkReachabilityStatus.ConnectionType)
+    public enum ConnectionType {
+      case ethernetOrWiFi
+      case cellular
+      public static func == (a: VBotPhoneSDK.NetworkReachabilityManager.NetworkReachabilityStatus.ConnectionType, b: VBotPhoneSDK.NetworkReachabilityManager.NetworkReachabilityStatus.ConnectionType) -> Swift.Bool
+      public func hash(into hasher: inout Swift.Hasher)
+      public var hashValue: Swift.Int {
+        get
+      }
+    }
+  }
+  public typealias Listener = (VBotPhoneSDK.NetworkReachabilityManager.NetworkReachabilityStatus) -> Swift.Void
+  public static let `default`: VBotPhoneSDK.NetworkReachabilityManager?
+  open var isReachable: Swift.Bool {
+    get
+  }
+  open var isReachableOnCellular: Swift.Bool {
+    get
+  }
+  open var isReachableOnEthernetOrWiFi: Swift.Bool {
+    get
+  }
+  final public let reachabilityQueue: Dispatch.DispatchQueue
+  open var flags: SystemConfiguration.SCNetworkReachabilityFlags? {
+    get
+  }
+  open var status: VBotPhoneSDK.NetworkReachabilityManager.NetworkReachabilityStatus {
+    get
+  }
+  convenience public init?(host: Swift.String)
+  convenience public init?()
+  @objc deinit
+  @discardableResult
+  open func startListening(onQueue queue: Dispatch.DispatchQueue = .main, onUpdatePerforming listener: @escaping VBotPhoneSDK.NetworkReachabilityManager.Listener) -> Swift.Bool
+  open func stopListening()
+}
+extension VBotPhoneSDK.NetworkReachabilityManager.NetworkReachabilityStatus : Swift.Equatable {
+  public static func == (a: VBotPhoneSDK.NetworkReachabilityManager.NetworkReachabilityStatus, b: VBotPhoneSDK.NetworkReachabilityManager.NetworkReachabilityStatus) -> Swift.Bool
+}
+extension Foundation.NSNotification.Name {
+  public static let VBotCallInfoUpdated: Foundation.Notification.Name
+  public static let VBotCallStarted: Foundation.Notification.Name
+  public static let VBotCallAccepted: Foundation.Notification.Name
+  public static let VBotCallEnded: Foundation.Notification.Name
+  public static let VBotCallMuteStateDidChange: Foundation.Notification.Name
+  public static let VBotCallHoldStateDidChange: Foundation.Notification.Name
+  public static let teardownSip: Foundation.Notification.Name
+  public static let receivedApnsToken: Foundation.Notification.Name
+  public static let remoteLoggingStateChanged: Foundation.Notification.Name
+}
+public struct VBotLogger {
+  public static func log(level: CocoaLumberjack.DDLogFlag, file: Swift.String = #file, function: Swift.String = #function, line: Swift.UInt = #line, filter: Swift.String? = nil, _ message: Swift.String)
+  public static func verbose(file: Swift.String = #file, function: Swift.String = #function, line: Swift.UInt = #line, filter: Swift.String? = nil, _ message: Swift.String)
+  public static func debug(file: Swift.String = #file, function: Swift.String = #function, line: Swift.UInt = #line, filter: Swift.String? = nil, _ message: Swift.String)
+  public static func info(file: Swift.String = #file, function: Swift.String = #function, line: Swift.UInt = #line, filter: Swift.String? = nil, _ message: Swift.String)
+  public static func warning(file: Swift.String = #file, function: Swift.String = #function, line: Swift.UInt = #line, filter: Swift.String? = nil, _ message: Swift.String)
+  public static func error(file: Swift.String = #file, function: Swift.String = #function, line: Swift.UInt = #line, filter: Swift.String? = nil, _ message: Swift.String)
+}
+extension CocoaLumberjack.DDLogFlag : Swift.Hashable {
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func == (lhs: CocoaLumberjack.DDLogFlag, rhs: CocoaLumberjack.DDLogFlag) -> Swift.Bool
+}
+@objc public protocol VBotPhoneDelegate {
+  @objc func receivedApnsToken(token: Swift.String?)
+  @objc func callStateChanged(call: VBotSIP.VBotCall)
+  @objc func callStarted()
+  @objc func callAccepted()
+  @objc func callEnded()
+  @objc func callMuteStateDidChange(muted: Swift.Bool)
+  @objc func callHoldStateDidChange(isOnHold: Swift.Bool)
+  @objc func messageButtonTapped()
+  @objc func callInfoUpdated(user: VBotPhoneSDK.CallUser)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class VBotPhone : ObjectiveC.NSObject {
+  public static let sharedInstance: VBotPhoneSDK.VBotPhone
+  public var audioOutput: VBotSIP.VBotAudioControllerOutputs?
+  public var callUser: VBotPhoneSDK.CallUser?
+  public func addDelegate(_ delegate: any VBotPhoneSDK.VBotPhoneDelegate)
+  public func removeDelegate(_ delegate: any VBotPhoneSDK.VBotPhoneDelegate)
+  public func notifyDelegates(_ action: (any VBotPhoneSDK.VBotPhoneDelegate) -> Swift.Void)
+  public func setup(delegate: (any VBotPhoneSDK.VBotPhoneDelegate)? = nil)
+  public func connect(token: Swift.String, completion: @escaping (Swift.String?, (any Swift.Error)?) -> Swift.Void)
+  public func disconnect(completion: @escaping ((any Swift.Error)?) -> Swift.Void)
+  public func delete(completion: @escaping () -> Swift.Void)
+  public func isUserConnected() -> Swift.Bool
+  public func userDisplayName() -> Swift.String?
+  public func userToken() -> Swift.String?
+  public func getHotlines(completion: @escaping ([VBotPhoneSDK.VBotHotline]?, (any Swift.Error)?) -> Swift.Void)
+  public func sendCallState(method: VBotPhoneSDK.SocketMethod, callId: Swift.String, message: Swift.String = "")
+  public func setupSocket(sendCallState: Swift.Bool = false, message: Swift.String = "")
+  public func isCallExist(completion: @escaping (Swift.Bool?, (any Swift.Error)?) -> Swift.Void)
+  @objc deinit
+}
+extension VBotPhoneSDK.VBotPhone {
+  public func createError(description: Swift.String) -> Foundation.NSError
+  public func startCall(phoneNumber: Swift.String, name: Swift.String? = nil, avatar: Swift.String? = nil, checkSum: Swift.String? = nil, hotline: Swift.String? = nil, completion: @escaping ((any Swift.Error)?) -> Swift.Void)
+  public func getActiveCall() -> VBotSIP.VBotCall?
+  public func getFirstCall() -> VBotSIP.VBotCall?
+  public func endCallSocket(completion: @escaping ((any Swift.Error)?) -> Swift.Void)
+  public func endCall(completion: @escaping ((any Swift.Error)?) -> Swift.Void)
+  public func muteCall()
+  public func holdCall(completion: @escaping ((any Swift.Error)?) -> Swift.Void)
+  public func hasAudioBluetooth() -> Swift.Bool
+  public func isSpeakerOn() -> Swift.Bool
+  public func onOffSpeaker()
+  public func isCallHold() -> Swift.Bool
+  public func isCallMute() -> Swift.Bool
+  public func sendDTMF(digit: Swift.String, completion: @escaping ((any Swift.Error)?) -> Swift.Void)
+}
+extension VBotPhoneSDK.VBotPhone {
+  public func showCallVC()
+}
+public enum VBotReachabilityError : Swift.Error {
+  case FailedToCreateWithAddress(Darwin.sockaddr_in)
+  case FailedToCreateWithHostname(Swift.String)
+  case UnableToSetCallback
+  case UnableToSetDispatchQueue
+}
+@objc public class VBotReachability : ObjectiveC.NSObject {
+  public enum NetworkStatus : Swift.CustomStringConvertible {
+    case notReachable
+    case reachableViaWiFi
+    case reachableVia2G
+    case reachableVia3G
+    case reachableVia4G
+    public var description: Swift.String {
+      get
+    }
+    public static func == (a: VBotPhoneSDK.VBotReachability.NetworkStatus, b: VBotPhoneSDK.VBotReachability.NetworkStatus) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public typealias NetworkChanged = (VBotPhoneSDK.VBotReachability) -> ()
+  public var whenConnectionChanged: VBotPhoneSDK.VBotReachability.NetworkChanged?
+  public var onWWAN: Swift.Bool
+  @objc public var hasHighSpeed: Swift.Bool {
+    @objc get
+  }
+  @objc public var statusString: Swift.String {
+    @objc get
+  }
+  @objc public var carrierName: Swift.String? {
+    @objc get
+  }
+  public var status: VBotPhoneSDK.VBotReachability.NetworkStatus {
+    get
+  }
+  public var radioStatus: VBotPhoneSDK.VBotReachability.NetworkStatus? {
+    get
+  }
+  required public init(reachabilityRef: SystemConfiguration.SCNetworkReachability)
+  convenience public init?(hostname: Swift.String)
+  convenience public init?(_: Swift.Bool)
+  @objc deinit
+  @objc override dynamic public var description: Swift.String {
+    @objc get
+  }
+}
+extension VBotPhoneSDK.VBotReachability {
+  public func startNotifier() throws
+  public func stopNotifier()
+}
+@_hasMissingDesignatedInitializers public class VBotReachabilityHelper {
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class ReturnToCallViewController : UIKit.UIViewController {
+  @_Concurrency.MainActor(unsafe) public static var inherentPipSize: CoreFoundation.CGSize {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public func resignCall()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func loadView()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func viewWillTransition(to size: CoreFoundation.CGSize, with coordinator: any UIKit.UIViewControllerTransitionCoordinator)
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public func viewWillLayoutSubviews()
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public var supportedInterfaceOrientations: UIKit.UIInterfaceOrientationMask {
+    @objc get
+  }
+  @_Concurrency.MainActor(unsafe) @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @_Concurrency.MainActor(unsafe) @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+extension VBotSIP.VBotSIP {
+  public func hasActiveCall() -> Swift.Bool
+}
+extension CoreFoundation.CGRect {
+  public var x: CoreFoundation.CGFloat {
+    get
+    set
+  }
+  public var y: CoreFoundation.CGFloat {
+    get
+    set
+  }
+  public var center: CoreFoundation.CGPoint {
+    get
+  }
+  public var topLeft: CoreFoundation.CGPoint {
+    get
+  }
+  public var topRight: CoreFoundation.CGPoint {
+    get
+  }
+  public var bottomLeft: CoreFoundation.CGPoint {
+    get
+  }
+  public var bottomRight: CoreFoundation.CGPoint {
+    get
+  }
+  public func pinnedToVerticalEdge(of boundingRect: CoreFoundation.CGRect) -> CoreFoundation.CGRect
+}
+extension UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) public var left: CoreFoundation.CGFloat {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public var right: CoreFoundation.CGFloat {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public var top: CoreFoundation.CGFloat {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public var bottom: CoreFoundation.CGFloat {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public var width: CoreFoundation.CGFloat {
+    get
+  }
+  @_Concurrency.MainActor(unsafe) public var height: CoreFoundation.CGFloat {
+    get
+  }
+}
+extension UIKit.UIView {
+  @_Concurrency.MainActor(unsafe) public func animateDecelerationToVerticalEdge(withDuration duration: Foundation.TimeInterval, velocity: CoreFoundation.CGPoint, velocityThreshold: CoreFoundation.CGFloat = 500, boundingRect: CoreFoundation.CGRect, completion: ((Swift.Bool) -> Swift.Void)? = nil)
+  @_Concurrency.MainActor(unsafe) public func setIsHidden(_ isHidden: Swift.Bool, animated: Swift.Bool, completion: ((Swift.Bool) -> Swift.Void)? = nil)
+  @_Concurrency.MainActor(unsafe) public func setIsHidden(_ isHidden: Swift.Bool, withAnimationDuration duration: Foundation.TimeInterval, completion: ((Swift.Bool) -> Swift.Void)? = nil)
+}
+extension CoreFoundation.CGPoint {
+  public var length: CoreFoundation.CGFloat {
+    get
+  }
+  @inlinable public func distance(_ other: CoreFoundation.CGPoint) -> CoreFoundation.CGFloat {
+        sqrt(pow(x - other.x, 2) + pow(y - other.y, 2))
+    }
+}
+extension UIKit.UIEdgeInsets {
+  public init(margin: CoreFoundation.CGFloat)
+}
+extension UIKit.UIView.AnimationCurve {
+  public var asAnimationOptions: UIKit.UIView.AnimationOptions {
+    get
+  }
+}
+extension Swift.Optional where Wrapped == UIKit.UIView.AnimationCurve {
+  public var asAnimationOptions: UIKit.UIView.AnimationOptions {
+    get
+  }
+}
+public enum SocketMethod : Swift.String, Swift.CaseIterable {
+  case READY_CALL
+  case UN_READY_CALL
+  case HANGUP_CALL
+  public init?(rawValue: Swift.String)
+  public typealias AllCases = [VBotPhoneSDK.SocketMethod]
+  public typealias RawValue = Swift.String
+  public static var allCases: [VBotPhoneSDK.SocketMethod] {
+    get
+  }
+  public var rawValue: Swift.String {
+    get
+  }
+}
+extension VBotSIP.VBotCallState {
+  public func stringValue() -> Swift.String
+}
+extension UIKit.UIWindow.Level {
+  public static let _background: UIKit.UIWindow.Level
+}
+public struct VoIPPushPayload {
+  public let uuid: Foundation.UUID
+  public let callerAvatar: Swift.String
+  public let callerName: Swift.String
+  public let callId: Swift.String
+}
+@objc public class CallUser : ObjectiveC.NSObject {
+  @objc final public let uuid: Foundation.UUID
+  @objc final public let callId: Swift.String
+  @objc final public let name: Swift.String
+  @objc final public let avatar: Swift.String
+  @objc public init(uuid: Foundation.UUID, callId: Swift.String, name: Swift.String, avatar: Swift.String)
+  @objc deinit
+}
+extension VBotPhoneSDK.NetworkReachabilityManager.NetworkReachabilityStatus.ConnectionType : Swift.Equatable {}
+extension VBotPhoneSDK.NetworkReachabilityManager.NetworkReachabilityStatus.ConnectionType : Swift.Hashable {}
+extension VBotPhoneSDK.VBotReachability.NetworkStatus : Swift.Equatable {}
+extension VBotPhoneSDK.VBotReachability.NetworkStatus : Swift.Hashable {}
+extension VBotPhoneSDK.SocketMethod : Swift.Equatable {}
+extension VBotPhoneSDK.SocketMethod : Swift.Hashable {}
+extension VBotPhoneSDK.SocketMethod : Swift.RawRepresentable {}

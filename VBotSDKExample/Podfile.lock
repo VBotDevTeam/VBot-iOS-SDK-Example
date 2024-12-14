@@ -1,0 +1,45 @@
+PODS:
+  - CocoaLumberjack (3.8.2):
+    - CocoaLumberjack/Core (= 3.8.2)
+  - CocoaLumberjack/Core (3.8.2)
+  - MBProgressHUD (1.2.0)
+  - SDWebImage (5.0.0):
+    - SDWebImage/Core (= 5.0.0)
+  - SDWebImage/Core (5.0.0)
+  - VBotPhoneSDK (0.1.0):
+    - CocoaLumberjack (= 3.8.2)
+    - SDWebImage (= 5.0.0)
+  - VBotSIP (1.2.0):
+    - CocoaLumberjack
+    - Vialer-pjsip-iOS
+  - Vialer-pjsip-iOS (3.5)
+
+DEPENDENCIES:
+  - MBProgressHUD (~> 1.2.0)
+  - VBotPhoneSDK (from `lib/VBotPhoneSDK`)
+  - VBotSIP (from `lib/VBotSIP`)
+
+SPEC REPOS:
+  trunk:
+    - CocoaLumberjack
+    - MBProgressHUD
+    - SDWebImage
+    - Vialer-pjsip-iOS
+
+EXTERNAL SOURCES:
+  VBotPhoneSDK:
+    :path: lib/VBotPhoneSDK
+  VBotSIP:
+    :path: lib/VBotSIP
+
+SPEC CHECKSUMS:
+  CocoaLumberjack: f8d89a516e7710fdb2e9b8f1560b16ec6040eef0
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  SDWebImage: 5de80a0302de9e377e62f47d2fa1304efff0e55f
+  VBotPhoneSDK: 52f4dc38739cdc68aef9382650f0e22016efd285
+  VBotSIP: 80165a59f533ffadfbdd17cbf6a3ad5fc5c50b76
+  Vialer-pjsip-iOS: 5ceea9f0e46a7748b2542ba04ca7dacf4de4b51c
+
+PODFILE CHECKSUM: 2a3f0fcdb2f8f30e9a58b0286d3dec1573ef33d3
+
+COCOAPODS: 1.15.2
