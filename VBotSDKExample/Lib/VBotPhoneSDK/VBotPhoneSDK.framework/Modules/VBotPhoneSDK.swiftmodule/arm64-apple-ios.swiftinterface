@@ -108,7 +108,12 @@ extension CocoaLumberjack.DDLogFlag : Swift.Hashable {
   public func addDelegate(_ delegate: any VBotPhoneSDK.VBotPhoneDelegate)
   public func removeDelegate(_ delegate: any VBotPhoneSDK.VBotPhoneDelegate)
   public func notifyDelegates(_ action: (any VBotPhoneSDK.VBotPhoneDelegate) -> Swift.Void)
-  public func setup(delegate: (any VBotPhoneSDK.VBotPhoneDelegate)? = nil)
+  public var defaultLocale: Swift.String
+  public func setup(with config: VBotPhoneSDK.VBotConfig = VBotConfig())
+  public func setConfig(config: VBotPhoneSDK.VBotConfig)
+  public func getConfig() -> VBotPhoneSDK.VBotConfig
+  public func setLocale(locale: Swift.String, localizedStrings: VBotPhoneSDK.VBotLocalizedStrings)
+  public func getLocalizedStrings(for locale: Swift.String) -> VBotPhoneSDK.VBotLocalizedStrings
   public func connect(token: Swift.String, completion: @escaping (Swift.String?, (any Swift.Error)?) -> Swift.Void)
   public func disconnect(completion: @escaping ((any Swift.Error)?) -> Swift.Void)
   public func delete(completion: @escaping () -> Swift.Void)
@@ -195,6 +200,9 @@ extension VBotPhoneSDK.VBotReachability {
 @_hasMissingDesignatedInitializers public class VBotReachabilityHelper {
   @objc deinit
 }
+public struct VBotConfig {
+  public init(locale: Swift.String = "vi_VN", supportDarkMode: Swift.Bool = true, supportPopupCall: Swift.Bool = true)
+}
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class ReturnToCallViewController : UIKit.UIViewController {
   @_Concurrency.MainActor(unsafe) public static var inherentPipSize: CoreFoundation.CGSize {
     get
@@ -212,6 +220,19 @@ extension VBotPhoneSDK.VBotReachability {
 }
 extension VBotSIP.VBotSIP {
   public func hasActiveCall() -> Swift.Bool
+}
+public struct VBotLocalizedStrings {
+  public let callVCTitle: Swift.String
+  public let callVCSpeaker: Swift.String
+  public let callVCMicrophone: Swift.String
+  public let callVCMessage: Swift.String
+  public let callStateCalling: Swift.String
+  public let callStateIncoming: Swift.String
+  public let callStateEarly: Swift.String
+  public let callStateConnecting: Swift.String
+  public let callStateConfirmed: Swift.String
+  public let callStateDisconnected: Swift.String
+  public init(callVCTitle: Swift.String, callVCSpeaker: Swift.String, callVCMicrophone: Swift.String, callVCMessage: Swift.String, callStateCalling: Swift.String, callStateIncoming: Swift.String, callStateEarly: Swift.String, callStateConnecting: Swift.String, callStateConfirmed: Swift.String, callStateDisconnected: Swift.String)
 }
 extension CoreFoundation.CGRect {
   public var x: CoreFoundation.CGFloat {
