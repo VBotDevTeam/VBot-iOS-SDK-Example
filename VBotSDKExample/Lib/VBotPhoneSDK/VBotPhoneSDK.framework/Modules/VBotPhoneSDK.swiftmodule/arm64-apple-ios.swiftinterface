@@ -78,6 +78,42 @@ extension Foundation.NSNotification.Name {
   public static let receivedApnsToken: Foundation.Notification.Name
   public static let remoteLoggingStateChanged: Foundation.Notification.Name
 }
+public enum AccountType {
+  case driver
+  case customer
+  public static func == (a: VBotPhoneSDK.AccountType, b: VBotPhoneSDK.AccountType) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct VBotConfig {
+  public init(accountType: VBotPhoneSDK.AccountType, supportDarkMode: Swift.Bool = true, supportPopupCall: Swift.Bool = true)
+}
+public struct VBotLocalizedStrings {
+  public var call_btn_messsage: Swift.String
+  public var call_btn_mute: Swift.String
+  public var call_btn_speaker: Swift.String
+  public var call_calling: Swift.String
+  public var call_connecting: Swift.String
+  public var call_end: Swift.String
+  public var call_failed_api: Swift.String
+  public var call_failed_no_connection: Swift.String
+  public var call_lost_connection: Swift.String
+  public var call_permission_btn_allow: Swift.String
+  public var call_permission_btn_deny: Swift.String
+  public var call_permission_btn_setting: Swift.String
+  public var call_permission_btn_skip: Swift.String
+  public var call_permission_microphone_content: Swift.String
+  public var call_permission_microphone_demied_content: Swift.String
+  public var call_permission_microphone_demied_title: Swift.String
+  public var call_permission_microphone_title: Swift.String
+  public var call_refused: Swift.String
+  public var call_ringing: Swift.String
+  public var call_title: Swift.String
+  public var call_weak_signal: Swift.String
+  public init(call_btn_messsage: Swift.String = "Nhắn tin", call_btn_mute: Swift.String = "Im lặng", call_btn_speaker: Swift.String = "Loa ngoài", call_calling: Swift.String = "Đang gọi bạn", call_connecting: Swift.String = "Đang kết nối", call_end: Swift.String = "Kết thúc", call_failed_api: Swift.String = "Không thể thực hiện cuộc gọi. Vui lòng thử lại.", call_failed_no_connection: Swift.String = "Không có mạng. Vui lòng thử lại.", call_lost_connection: Swift.String = "Mất kết nối", call_permission_btn_allow: Swift.String = "Cho phép", call_permission_btn_deny: Swift.String = "Không cho phép", call_permission_btn_setting: Swift.String = "Đi đến Cài đặt", call_permission_btn_skip: Swift.String = "Bỏ qua", call_permission_microphone_content: Swift.String = "Việc này cho phép ứng dụng thực hiện cuộc gọi miễn phí trong ứng dụng.", call_permission_microphone_demied_content: Swift.String = "Vui lòng cho phép ứng dụng truy cập \"Microphone\" trong Cài đặt điện thoại của bạn.", call_permission_microphone_demied_title: Swift.String = "Không thể thực hiện cuộc gọi do chưa có quyền truy cập “Micrô\"", call_permission_microphone_title: Swift.String = "Xanh SM muốn truy cập micrô trên thiết bị của bạn.", call_refused: Swift.String = "Người nhận từ chối cuộc gọi", call_ringing: Swift.String = "Đang gọi", call_title: Swift.String = "Gọi miễn phí", call_weak_signal: Swift.String = "Sóng yếu")
+}
 public struct VBotLogger {
   public static func log(level: CocoaLumberjack.DDLogFlag, file: Swift.String = #file, function: Swift.String = #function, line: Swift.UInt = #line, filter: Swift.String? = nil, _ message: Swift.String)
   public static func verbose(file: Swift.String = #file, function: Swift.String = #function, line: Swift.UInt = #line, filter: Swift.String? = nil, _ message: Swift.String)
@@ -108,12 +144,11 @@ extension CocoaLumberjack.DDLogFlag : Swift.Hashable {
   public func addDelegate(_ delegate: any VBotPhoneSDK.VBotPhoneDelegate)
   public func removeDelegate(_ delegate: any VBotPhoneSDK.VBotPhoneDelegate)
   public func notifyDelegates(_ action: (any VBotPhoneSDK.VBotPhoneDelegate) -> Swift.Void)
-  public var defaultLocale: Swift.String
-  public func setup(with config: VBotPhoneSDK.VBotConfig = VBotConfig())
+  public func setup(with config: VBotPhoneSDK.VBotConfig = VBotConfig(accountType: .customer))
   public func setConfig(config: VBotPhoneSDK.VBotConfig)
   public func getConfig() -> VBotPhoneSDK.VBotConfig
-  public func setLocale(locale: Swift.String, localizedStrings: VBotPhoneSDK.VBotLocalizedStrings)
-  public func getLocalizedStrings(for locale: Swift.String) -> VBotPhoneSDK.VBotLocalizedStrings
+  public func setLocalizationStrings(_ data: VBotPhoneSDK.VBotLocalizedStrings)
+  public func getLocalizedStrings() -> VBotPhoneSDK.VBotLocalizedStrings
   public func connect(token: Swift.String, completion: @escaping (Swift.String?, (any Swift.Error)?) -> Swift.Void)
   public func disconnect(completion: @escaping ((any Swift.Error)?) -> Swift.Void)
   public func delete(completion: @escaping () -> Swift.Void)
@@ -131,7 +166,6 @@ extension VBotPhoneSDK.VBotPhone {
   public func startCall(phoneNumber: Swift.String, name: Swift.String? = nil, avatar: Swift.String? = nil, checkSum: Swift.String? = nil, hotline: Swift.String? = nil, completion: @escaping ((any Swift.Error)?) -> Swift.Void)
   public func getActiveCall() -> VBotSIP.VBotCall?
   public func getFirstCall() -> VBotSIP.VBotCall?
-  public func endCallSocket(completion: @escaping ((any Swift.Error)?) -> Swift.Void)
   public func endCall(completion: @escaping ((any Swift.Error)?) -> Swift.Void)
   public func muteCall()
   public func holdCall(completion: @escaping ((any Swift.Error)?) -> Swift.Void)
@@ -200,9 +234,6 @@ extension VBotPhoneSDK.VBotReachability {
 @_hasMissingDesignatedInitializers public class VBotReachabilityHelper {
   @objc deinit
 }
-public struct VBotConfig {
-  public init(locale: Swift.String = "vi_VN", supportDarkMode: Swift.Bool = true, supportPopupCall: Swift.Bool = true)
-}
 @objc @_inheritsConvenienceInitializers @_Concurrency.MainActor(unsafe) public class ReturnToCallViewController : UIKit.UIViewController {
   @_Concurrency.MainActor(unsafe) public static var inherentPipSize: CoreFoundation.CGSize {
     get
@@ -220,19 +251,6 @@ public struct VBotConfig {
 }
 extension VBotSIP.VBotSIP {
   public func hasActiveCall() -> Swift.Bool
-}
-public struct VBotLocalizedStrings {
-  public let callVCTitle: Swift.String
-  public let callVCSpeaker: Swift.String
-  public let callVCMicrophone: Swift.String
-  public let callVCMessage: Swift.String
-  public let callStateCalling: Swift.String
-  public let callStateIncoming: Swift.String
-  public let callStateEarly: Swift.String
-  public let callStateConnecting: Swift.String
-  public let callStateConfirmed: Swift.String
-  public let callStateDisconnected: Swift.String
-  public init(callVCTitle: Swift.String, callVCSpeaker: Swift.String, callVCMicrophone: Swift.String, callVCMessage: Swift.String, callStateCalling: Swift.String, callStateIncoming: Swift.String, callStateEarly: Swift.String, callStateConnecting: Swift.String, callStateConfirmed: Swift.String, callStateDisconnected: Swift.String)
 }
 extension CoreFoundation.CGRect {
   public var x: CoreFoundation.CGFloat {
@@ -342,6 +360,8 @@ public struct VoIPPushPayload {
 }
 extension VBotPhoneSDK.NetworkReachabilityManager.NetworkReachabilityStatus.ConnectionType : Swift.Equatable {}
 extension VBotPhoneSDK.NetworkReachabilityManager.NetworkReachabilityStatus.ConnectionType : Swift.Hashable {}
+extension VBotPhoneSDK.AccountType : Swift.Equatable {}
+extension VBotPhoneSDK.AccountType : Swift.Hashable {}
 extension VBotPhoneSDK.VBotReachability.NetworkStatus : Swift.Equatable {}
 extension VBotPhoneSDK.VBotReachability.NetworkStatus : Swift.Hashable {}
 extension VBotPhoneSDK.SocketMethod : Swift.Equatable {}

@@ -9,7 +9,6 @@
 import MBProgressHUD
 import UIKit
 import VBotPhoneSDK
-// import VBotPhone
 
 // Constants
 enum Constants {
@@ -32,7 +31,7 @@ class ViewController: UIViewController {
     @IBOutlet var phoneTextField: UITextField!
     @IBOutlet var selectHotlineButton: UIButton!
     
-    var selecedHotine: VBotHotline?
+    var selectedHotline: VBotHotline?
     
     let client = VBotPhone.sharedInstance
    
@@ -96,18 +95,18 @@ class ViewController: UIViewController {
     
     func setupHotline(_ hotlines: [VBotHotline]?) {
         guard let hotlines = hotlines, !hotlines.isEmpty else {
-            selecedHotine = nil
+            selectedHotline = nil
             selectHotlineButton.setTitle("No hotlines", for: .normal)
             selectHotlineButton.isEnabled = false
             return
         }
         
-        selecedHotine = hotlines[0]
+        selectedHotline = hotlines[0]
         var menuChildren: [UIMenuElement] = []
         
         for hotline in hotlines {
             let action = UIAction(title: hotline.name) { [weak self] _ in
-                self?.selecedHotine = hotline
+                self?.selectedHotline = hotline
                 self?.hotlineTextfield.text = hotline.name
                 self?.selectHotlineButton.setTitle(hotline.name, for: .normal)
             }
@@ -129,35 +128,36 @@ class ViewController: UIViewController {
     }
     
     func connectClient() {
-        let token = tokenTextField.text ?? ""
+        let token = tokenTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+
         client.connect(token: token) { [weak self] displayName, error in
             guard let self = self else { return }
-            
+
             self.loginButton.isEnabled = true
             self.hideProgress()
-            
+
             if let error = error as NSError? {
                 self.showError(code: error.code, message: error.localizedDescription)
                 return
             }
-            
-            guard let displayName = displayName else { return }
-            
-            self.updateUIAfterConnect(displayName: displayName)
+
+            if let displayName = displayName {
+                self.updateUIAfterConnect(displayName: displayName)
+            }
         }
     }
 
     func disconnectClient() {
         client.disconnect { [weak self] error in
             guard let self = self else { return }
+            
             self.hideProgress()
             
             if let error = error as NSError? {
                 self.showError(code: error.code, message: error.localizedDescription)
-                return
+            } else {
+                self.updateUIAfterDisconnect()
             }
-            
-            self.updateUIAfterDisconnect()
         }
     }
 
@@ -179,13 +179,13 @@ class ViewController: UIViewController {
     }
     
     func updateUIAfterDelete() {
-           loginButton.isEnabled = true
-           accountLabel.isHidden = false
-           accountLabel.text = Constants.disconnectedText
-           accountLabel.textColor = .red
-           loginButton.setTitle(Constants.loginText, for: .normal)
-           setupHotline(nil)
-       }
+        loginButton.isEnabled = true
+        accountLabel.isHidden = false
+        accountLabel.text = Constants.disconnectedText
+        accountLabel.textColor = .red
+        loginButton.setTitle(Constants.loginText, for: .normal)
+        setupHotline(nil)
+    }
     
     @IBAction func loginButton_tapped(_ sender: Any) {
         hideKeyboard()
@@ -200,34 +200,41 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func callButton_tapped(_ sender: Any) {
+    @IBAction func callButtonTapped(_ sender: Any) {
         hideKeyboard()
-                
-        let phoneNumber = phoneTextField.text ?? ""
-        let hotline = (hotlineTextfield.text != "" ? selecedHotine?.phoneNumber : "") ?? ""
-        let uuid = UUID() // Tạo một UUID mới
-        let uuidString = uuid.uuidString // Lấy chuỗi UUID 36 ký tự
-        var header = ""
-        if phoneNumber == "114" || phoneNumber == "115" {
-            header = "android"
-        } else {
-            header = "ios"
-        }
-        client.startCall(phoneNumber: phoneNumber, name: phoneNumber, avatar: "", checkSum: header + uuidString, hotline: hotline) { [weak self] error in
+
+        let phoneNumber = phoneTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        let hotline = hotlineTextfield.text?.isEmpty == false ? selectedHotline?.phoneNumber ?? "" : ""
+
+        // Start the call
+        client.startCall(
+            phoneNumber: phoneNumber,
+            name: phoneNumber,
+            avatar: "https://avatar.iran.liara.run/public",
+            checkSum: generateChecksum(for: phoneNumber),
+            hotline: hotline
+        ) { [weak self] error in
             guard let self = self else { return }
-            if error != nil {
-                self.showError(code: (error! as NSError).code, message: (error! as NSError).localizedDescription)
+
+            // Handle error
+            if let error = error as NSError? {
+                self.showError(code: error.code, message: error.localizedDescription)
             }
         }
     }
 
+    func generateChecksum(for phoneNumber: String) -> String {
+        let uuidString = UUID().uuidString
+        let platform = (phoneNumber == "114" || phoneNumber == "115") ? "android" : "ios"
+        return platform + uuidString
+    }
     
     func showError(code: Int, message: String) {
         let errorMessage = UIAlertController(title: Constants.errorTitle, message: "Code: \(code)\nMessage: \(message)", preferredStyle: .alert)
 
         let close = UIAlertAction(title: Constants.closeTitle, style: .default)
         let delete = UIAlertAction(title: Constants.deleteTitle, style: .destructive) { _ in
-            VBotPhone.sharedInstance.delete() {
+            VBotPhone.sharedInstance.delete {
                 self.updateUIAfterDelete()
             }
         }
@@ -261,6 +268,4 @@ extension UIViewController {
     func hideProgress() {
         MBProgressHUD.hide(for: view, animated: true)
     }
-    
-    
 }

@@ -5,6 +5,9 @@ target 'VBotSDKExample' do
 
   pod 'VBotPhoneSDK', :path => 'lib/VBotPhoneSDK'
   pod 'VBotSIP', :path => 'lib/VBotSIP'
+  pod 'Vialer-pjsip-iOS', :path => '/Users/datnguyenquoc/1qdatt_XCodePrj/new-vbot-sdk-2025/Vialer-pjsip-iOS'
+
+
   
   pod 'MBProgressHUD', '~> 1.2.0'
   
