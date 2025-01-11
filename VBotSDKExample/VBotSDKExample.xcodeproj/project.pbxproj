@@ -45,6 +45,12 @@
 		7D36B45CE3D73038B779D71C /* Pods_VBotSDKExample_VBotSDKExampleUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VBotSDKExample_VBotSDKExampleUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C942A34449B6D32163E77CBF /* Pods-VBotSDKExample-VBotSDKExampleUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-VBotSDKExample-VBotSDKExampleUITests.release.xcconfig"; path = "Target Support Files/Pods-VBotSDKExample-VBotSDKExampleUITests/Pods-VBotSDKExample-VBotSDKExampleUITests.release.xcconfig"; sourceTree = "<group>"; };
 		DF1112162D0BEA8F005598FC /* VBotSDKExample.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = VBotSDKExample.entitlements; sourceTree = "<group>"; };
+		DF36AE472D2E395F00C4755C /* CocoaLumberjack.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = CocoaLumberjack.xcframework; path = "../../../../1qdatt_XCodePrj/new-vbot-sdk-2025/final-xcframework/VBotPhoneSDKcopy/iOS/CocoaLumberjack.xcframework"; sourceTree = "<group>"; };
+		DF36AE482D2E395F00C4755C /* Reachability.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = Reachability.xcframework; path = "../../../../1qdatt_XCodePrj/new-vbot-sdk-2025/final-xcframework/VBotPhoneSDKcopy/iOS/Reachability.xcframework"; sourceTree = "<group>"; };
+		DF36AE492D2E395F00C4755C /* SDWebImage.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SDWebImage.xcframework; path = "../../../../1qdatt_XCodePrj/new-vbot-sdk-2025/final-xcframework/VBotPhoneSDKcopy/iOS/SDWebImage.xcframework"; sourceTree = "<group>"; };
+		DF36AE4A2D2E395F00C4755C /* VBotPhoneSDK.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = VBotPhoneSDK.xcframework; path = "../../../../1qdatt_XCodePrj/new-vbot-sdk-2025/final-xcframework/VBotPhoneSDKcopy/iOS/VBotPhoneSDK.xcframework"; sourceTree = "<group>"; };
+		DF36AE4B2D2E395F00C4755C /* VBotPJSIP.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = VBotPJSIP.xcframework; path = "../../../../1qdatt_XCodePrj/new-vbot-sdk-2025/final-xcframework/VBotPhoneSDKcopy/iOS/VBotPJSIP.xcframework"; sourceTree = "<group>"; };
+		DF36AE4C2D2E395F00C4755C /* VBotSIP.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = VBotSIP.xcframework; path = "../../../../1qdatt_XCodePrj/new-vbot-sdk-2025/final-xcframework/VBotPhoneSDKcopy/iOS/VBotSIP.xcframework"; sourceTree = "<group>"; };
 		DF3C7BF82D0BDC2800559BC4 /* VBotSDKExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VBotSDKExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DF3C7BFB2D0BDC2800559BC4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DF3C7BFF2D0BDC2800559BC4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -106,6 +112,12 @@
 		48423E2E122311A90CD548C8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				DF36AE472D2E395F00C4755C /* CocoaLumberjack.xcframework */,
+				DF36AE482D2E395F00C4755C /* Reachability.xcframework */,
+				DF36AE492D2E395F00C4755C /* SDWebImage.xcframework */,
+				DF36AE4A2D2E395F00C4755C /* VBotPhoneSDK.xcframework */,
+				DF36AE4B2D2E395F00C4755C /* VBotPJSIP.xcframework */,
+				DF36AE4C2D2E395F00C4755C /* VBotSIP.xcframework */,
 				1ACAC8CD3762B8B5ECBAEA26 /* Pods_VBotSDKExample.framework */,
 				7D36B45CE3D73038B779D71C /* Pods_VBotSDKExample_VBotSDKExampleUITests.framework */,
 				78714A71D3EE61F1FBB6C63E /* Pods_VBotSDKExampleTests.framework */,
@@ -177,7 +189,8 @@
 				DF3C7BF42D0BDC2800559BC4 /* Sources */,
 				DF3C7BF52D0BDC2800559BC4 /* Frameworks */,
 				DF3C7BF62D0BDC2800559BC4 /* Resources */,
-				933C79B724556F1A19A48EDD /* [CP] Copy Pods Resources */,
+				1A4BC65061E87A048CB411F3 /* [CP] Embed Pods Frameworks */,
+				CBFF0BF153551062C1F8029A /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -215,7 +228,8 @@
 				DF3C7C142D0BDC2A00559BC4 /* Sources */,
 				DF3C7C152D0BDC2A00559BC4 /* Frameworks */,
 				DF3C7C162D0BDC2A00559BC4 /* Resources */,
-				A4F6697AEEB4EA57DA907DD3 /* [CP] Copy Pods Resources */,
+				53394D5A79E334FC4BD88C65 /* [CP] Embed Pods Frameworks */,
+				A1024FB323B1452D435E949D /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -299,6 +313,40 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		1A4BC65061E87A048CB411F3 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VBotSDKExample/Pods-VBotSDKExample-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VBotSDKExample/Pods-VBotSDKExample-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VBotSDKExample/Pods-VBotSDKExample-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		53394D5A79E334FC4BD88C65 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VBotSDKExample-VBotSDKExampleUITests/Pods-VBotSDKExample-VBotSDKExampleUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VBotSDKExample-VBotSDKExampleUITests/Pods-VBotSDKExample-VBotSDKExampleUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VBotSDKExample-VBotSDKExampleUITests/Pods-VBotSDKExample-VBotSDKExampleUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		657CDF82331B3C29577A20C5 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -321,24 +369,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		933C79B724556F1A19A48EDD /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-VBotSDKExample/Pods-VBotSDKExample-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-VBotSDKExample/Pods-VBotSDKExample-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VBotSDKExample/Pods-VBotSDKExample-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A4F6697AEEB4EA57DA907DD3 /* [CP] Copy Pods Resources */ = {
+		A1024FB323B1452D435E949D /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -397,6 +428,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		CBFF0BF153551062C1F8029A /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VBotSDKExample/Pods-VBotSDKExample-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-VBotSDKExample/Pods-VBotSDKExample-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-VBotSDKExample/Pods-VBotSDKExample-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -586,14 +634,22 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 62B9EFA163CB1D67A0936B73 /* Pods-VBotSDKExample.debug.xcconfig */;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = VBotSDKExample/VBotSDKExample.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VU9GAW6B49;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				EXCLUDED_ARCHS = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Lib/VBotPhoneSDK",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VBotSDKExample/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "VBot SDK";
@@ -606,8 +662,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vpmedia.vbot-sdk-example-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -620,14 +677,22 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = E4C7482B47B9D4519D81A72D /* Pods-VBotSDKExample.release.xcconfig */;
 			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = NO;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = VBotSDKExample/VBotSDKExample.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VU9GAW6B49;
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				EXCLUDED_ARCHS = "";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Lib/VBotPhoneSDK",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = VBotSDKExample/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "VBot SDK";
@@ -640,8 +705,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.1;
 				ONLY_ACTIVE_ARCH = NO;
+				OTHER_SWIFT_FLAGS = "";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.vpmedia.vbot-sdk-example-dev";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -665,7 +731,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vpmedia.VBotSDKExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VBotSDKExample.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VBotSDKExample";
 			};
@@ -686,7 +752,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.vpmedia.VBotSDKExampleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VBotSDKExample.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/VBotSDKExample";
 			};
@@ -701,11 +767,12 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VU9GAW6B49;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vpmedia.VBotSDKExampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = VBotSDKExample;
 			};
@@ -720,11 +787,12 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = VU9GAW6B49;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.vpmedia.VBotSDKExampleUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_TARGET_NAME = VBotSDKExample;
 			};

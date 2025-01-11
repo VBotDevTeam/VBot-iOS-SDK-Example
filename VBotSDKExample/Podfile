@@ -1,14 +1,9 @@
 platform :ios, '13.5'
 
 target 'VBotSDKExample' do
- use_frameworks! :linkage => :static
-
-  pod 'VBotPhoneSDK', :path => 'lib/VBotPhoneSDK'
-  pod 'VBotSIP', :path => 'lib/VBotSIP'
-  pod 'Vialer-pjsip-iOS', :path => '/Users/datnguyenquoc/1qdatt_XCodePrj/new-vbot-sdk-2025/Vialer-pjsip-iOS'
-
-
+  use_frameworks!
   
+  pod 'VBotPhoneSDK', :path => './Lib/VBotPhoneSDK'
   pod 'MBProgressHUD', '~> 1.2.0'
   
   target 'VBotSDKExampleTests' do
@@ -21,4 +16,7 @@ target 'VBotSDKExample' do
   end
 
 end
+
+
+
 

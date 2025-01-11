@@ -22,6 +22,39 @@ enum Constants {
     static let loginText = "Login"
 }
 
+enum TestPhoneNumber: String {
+    case caNgu = "112"
+    case caVoi = "113"
+    case caChuoi = "114"
+    case caChim = "115"
+    
+    var name: String {
+        switch self {
+        case .caNgu:
+            return "Cá ngừ"
+        case .caVoi:
+            return "Cá Voi"
+        case .caChuoi:
+            return "Cá Chuối"
+        case .caChim:
+            return "Cá Chim"
+        }
+    }
+    
+    var code: String {
+        switch self {
+        case .caNgu:
+            return "ios01"
+        case .caVoi:
+            return "ios02"
+        case .caChuoi:
+            return "android01"
+        case .caChim:
+            return "android02"
+        }
+    }
+}
+
 class ViewController: UIViewController {
     @IBOutlet var tokenTextField: UITextField!
     @IBOutlet var loginButton: UIButton!
@@ -205,13 +238,17 @@ class ViewController: UIViewController {
 
         let phoneNumber = phoneTextField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
         let hotline = hotlineTextfield.text?.isEmpty == false ? selectedHotline?.phoneNumber ?? "" : ""
-
+        
+        guard let number = TestPhoneNumber(rawValue: phoneNumber) else {
+            return
+        }
+        
         // Start the call
         client.startCall(
-            phoneNumber: phoneNumber,
-            name: phoneNumber,
+            phoneNumber: number.rawValue,
+            name: number.name,
             avatar: "https://avatar.iran.liara.run/public",
-            checkSum: generateChecksum(for: phoneNumber),
+            checkSum: generateChecksum(for: number),
             hotline: hotline
         ) { [weak self] error in
             guard let self = self else { return }
@@ -223,10 +260,9 @@ class ViewController: UIViewController {
         }
     }
 
-    func generateChecksum(for phoneNumber: String) -> String {
+    func generateChecksum(for testNumber: TestPhoneNumber) -> String {
         let uuidString = UUID().uuidString
-        let platform = (phoneNumber == "114" || phoneNumber == "115") ? "android" : "ios"
-        return platform + uuidString
+        return testNumber.code + uuidString
     }
     
     func showError(code: Int, message: String) {

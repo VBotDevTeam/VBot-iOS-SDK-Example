@@ -12,7 +12,7 @@
         <!--View Controller-->
         <scene sceneID="war-3u-4Oo">
             <objects>
-                <viewController id="bB0-Wt-5bx" customClass="ViewController" customModule="VBotPhoneSDK_Example" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="bB0-Wt-5bx" customClass="ViewController" customModule="VBotSDKExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Deh-pL-qem"/>
                         <viewControllerLayoutGuide type="bottom" id="Nzq-VF-GV2"/>
@@ -91,7 +91,7 @@
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="filled" title="Call"/>
                                         <connections>
-                                            <action selector="callButton_tapped:" destination="bB0-Wt-5bx" eventType="touchUpInside" id="MKV-Uq-SIK"/>
+                                            <action selector="callButtonTapped:" destination="bB0-Wt-5bx" eventType="touchUpInside" id="chb-9O-x30"/>
                                         </connections>
                                     </button>
                                     <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Hotline" textAlignment="natural" minimumFontSize="22" clearButtonMode="always" translatesAutoresizingMaskIntoConstraints="NO" id="abf-15-lSV">
