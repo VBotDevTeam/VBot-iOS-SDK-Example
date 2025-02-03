@@ -342,14 +342,10 @@ SWIFT_CLASS("_TtC12VBotPhoneSDK9VBotPhone")
 /// Protocol định nghĩa các phương thức delegate cho VBotPhone
 SWIFT_PROTOCOL("_TtP12VBotPhoneSDK17VBotPhoneDelegate_")
 @protocol VBotPhoneDelegate
+@optional
 /// Được gọi khi nhận được APNs token mới từ hệ thống
-/// Sử dụng phương thức này để cập nhật APNs token mới lên server
-/// \param token Token APNs mới nhận được hoặc nil nếu không lấy được token
-///
 - (void)receivedApnsTokenWithToken:(NSString * _Nullable)token;
 /// Được gọi khi trạng thái của cuộc gọi thay đổi
-/// \param call Đối tượng VBotCall chứa thông tin và trạng thái mới của cuộc gọi
-///
 - (void)callStateChangedWithCall:(VBotCall * _Nonnull)call;
 /// Được gọi khi một cuộc gọi đi mới bắt đầu
 - (void)callStarted;
@@ -358,19 +354,15 @@ SWIFT_PROTOCOL("_TtP12VBotPhoneSDK17VBotPhoneDelegate_")
 /// Được gọi khi cuộc gọi kết thúc
 - (void)callEnded;
 /// Được gọi khi trạng thái microphone thay đổi
-/// \param muted <code>true</code> nếu microphone đã tắt tiếng, <code>false</code> nếu đang bật
-///
 - (void)callMuteStateDidChangeWithMuted:(BOOL)muted;
-/// Được gọi khi trạng thái giữ máy (hold) thay đổi
-/// \param isOnHold <code>true</code> nếu cuộc gọi đang được giữ, <code>false</code> nếu đang hoạt động
-///
+/// Được gọi khi trạng thái giữ máy thay đổi
 - (void)callHoldStateDidChangeWithIsOnHold:(BOOL)isOnHold;
 /// Được gọi khi người dùng nhấn vào nút nhắn tin
 - (void)messageButtonTapped;
 /// Được gọi khi thông tin người dùng trong cuộc gọi được cập nhật
-/// \param user Đối tượng CallUser chứa thông tin mới của người dùng
-///
 - (void)callInfoUpdatedWithUser:(CallUser * _Nonnull)user;
+- (void)networkIsUnreachable;
+- (void)internetConnectionChanged;
 @end
 
 

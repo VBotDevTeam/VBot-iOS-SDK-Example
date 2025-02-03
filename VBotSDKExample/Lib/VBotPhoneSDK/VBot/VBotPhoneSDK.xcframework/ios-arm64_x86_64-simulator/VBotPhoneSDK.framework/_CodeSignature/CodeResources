@@ -86,7 +86,7 @@
 		</data>
 		<key>Headers/VBotPhoneSDK-Swift.h</key>
 		<data>
-		v6yEMEb/UItf1dB4k6pnVCAdAJo=
+		N2VLu1SKV/CPF0UaWWFQpfMir3c=
 		</data>
 		<key>Headers/VBotPhoneSDK.h</key>
 		<data>
@@ -130,43 +130,43 @@
 		</data>
 		<key>Modules/VBotPhoneSDK.swiftmodule/arm64-apple-ios-simulator.abi.json</key>
 		<data>
-		miyMvmd2u+vYEQ2and1C3ugBmnM=
+		R6wemi1rrXO4iV+GuLRRx+KJiV4=
 		</data>
 		<key>Modules/VBotPhoneSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		gBaduXdaisIdVHJ03gJ+jce88Y4=
+		WNsBhX2GF6Pl7Bd7zc88TrOVTuU=
 		</data>
 		<key>Modules/VBotPhoneSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		vnCvFz/1RjEXxaam3Uqa4azSvWI=
+		uR0xu0vvxLkFL2Qpl003fM0PX68=
 		</data>
 		<key>Modules/VBotPhoneSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		gBaduXdaisIdVHJ03gJ+jce88Y4=
+		WNsBhX2GF6Pl7Bd7zc88TrOVTuU=
 		</data>
 		<key>Modules/VBotPhoneSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		m+xr9X/w95zcoh4g0E0T7BKaneM=
+		GLsggMEnVMqJWaQlDrMVHnvGqhg=
 		</data>
 		<key>Modules/VBotPhoneSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<data>
-		miyMvmd2u+vYEQ2and1C3ugBmnM=
+		R6wemi1rrXO4iV+GuLRRx+KJiV4=
 		</data>
 		<key>Modules/VBotPhoneSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<data>
-		CoRgSwsgH8ktS0s5VLOzJph2/ms=
+		D+OtFub8EiLa42oK5RPWv/uy6BM=
 		</data>
 		<key>Modules/VBotPhoneSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<data>
-		KGaCvgIKB4rrXuHqpvCzgCz+Uec=
+		/SJag7PImLHavb/FYu5K/tzLTz4=
 		</data>
 		<key>Modules/VBotPhoneSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<data>
-		CoRgSwsgH8ktS0s5VLOzJph2/ms=
+		D+OtFub8EiLa42oK5RPWv/uy6BM=
 		</data>
 		<key>Modules/VBotPhoneSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<data>
-		AWalNEz1vFtaqtJZQ4rF/lGOx/s=
+		M3AbKGOuWG0oc7kMmSLRDGgQw3c=
 		</data>
 		<key>Modules/module.modulemap</key>
 		<data>
@@ -367,7 +367,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			JvJiGDoEmGLLSjJwgF6T7dTAqslf27jx0H5bZFb7JfM=
+			3/KEgFgLJlELa2aTj2O2cpocF61IxVXIpgu0tDsIW+s=
 			</data>
 		</dict>
 		<key>Headers/VBotPhoneSDK.h</key>
@@ -437,70 +437,70 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			m/kc7OWfW0uhfe58j8GxGn0IUsnWu/BQ4kwLmN3i2rg=
+			OGv2CjbNf7KiMPNxj2pu3Q5ZjOQ9Gg6532c2BEC2eZ4=
 			</data>
 		</dict>
 		<key>Modules/VBotPhoneSDK.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			zI7Rr84XO5HxeR0MEDoVBcG7nc/29ZrRaTCUcO2dP3I=
+			kcPPidQDJSSTyXSABtbvIEXA5amBflP5ZY0KcMafxj8=
 			</data>
 		</dict>
 		<key>Modules/VBotPhoneSDK.swiftmodule/arm64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			simTYVjJ/Yekie6NdIUyDds9dAy+QF7o1b20tYS+kAo=
+			zOatNISMXF8HKdPxfroV7Cm/t7O782RYe5fB4jMZfP4=
 			</data>
 		</dict>
 		<key>Modules/VBotPhoneSDK.swiftmodule/arm64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			zI7Rr84XO5HxeR0MEDoVBcG7nc/29ZrRaTCUcO2dP3I=
+			kcPPidQDJSSTyXSABtbvIEXA5amBflP5ZY0KcMafxj8=
 			</data>
 		</dict>
 		<key>Modules/VBotPhoneSDK.swiftmodule/arm64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			fsQgvVDPDaWRdPZElvFohfgF++ERjBgXqeFUuD2JViE=
+			F7zNf47RFf0hMBRokgOFeBsMy2vcAA97EMhsReqUJuo=
 			</data>
 		</dict>
 		<key>Modules/VBotPhoneSDK.swiftmodule/x86_64-apple-ios-simulator.abi.json</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			m/kc7OWfW0uhfe58j8GxGn0IUsnWu/BQ4kwLmN3i2rg=
+			OGv2CjbNf7KiMPNxj2pu3Q5ZjOQ9Gg6532c2BEC2eZ4=
 			</data>
 		</dict>
 		<key>Modules/VBotPhoneSDK.swiftmodule/x86_64-apple-ios-simulator.private.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			A4oKnq/f272AxlPfbg2CDKrWkMkq4R9LXITiCt+KONY=
+			DzC85upxmDbpF0gAWRSlgCiSZbtAJf7L+cTBf4RnWFc=
 			</data>
 		</dict>
 		<key>Modules/VBotPhoneSDK.swiftmodule/x86_64-apple-ios-simulator.swiftdoc</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			3IFfoWHd4fPHPY68GeNfGgf32yPUKNJ+IBDjGfh5yPg=
+			ThSftpgJ6BdC5r9mEgjW2bCR2QLjKy3yUrjpyIHJFc8=
 			</data>
 		</dict>
 		<key>Modules/VBotPhoneSDK.swiftmodule/x86_64-apple-ios-simulator.swiftinterface</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			A4oKnq/f272AxlPfbg2CDKrWkMkq4R9LXITiCt+KONY=
+			DzC85upxmDbpF0gAWRSlgCiSZbtAJf7L+cTBf4RnWFc=
 			</data>
 		</dict>
 		<key>Modules/VBotPhoneSDK.swiftmodule/x86_64-apple-ios-simulator.swiftmodule</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			lotPfIIT47Sx8ekRdGXPahYN8GfCjKXs5cUi94m0TEU=
+			gEO08OS7Aq1tiSQJ048RxNAQXEKbC/J66fAYXnv1kzQ=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
