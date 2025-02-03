@@ -1,0 +1,23 @@
+PODS:
+  - MBProgressHUD (1.2.0)
+  - VBotPhoneSDK (1.4.0)
+
+DEPENDENCIES:
+  - MBProgressHUD (~> 1.2.0)
+  - VBotPhoneSDK (from `./Lib/VBotPhoneSDK`)
+
+SPEC REPOS:
+  trunk:
+    - MBProgressHUD
+
+EXTERNAL SOURCES:
+  VBotPhoneSDK:
+    :path: "./Lib/VBotPhoneSDK"
+
+SPEC CHECKSUMS:
+  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
+  VBotPhoneSDK: c01be2467e99ed32519d7e5872e68f2f4ce9b4bb
+
+PODFILE CHECKSUM: b7a092f4912847eb99b5567c62d8d5c7edb629ee
+
+COCOAPODS: 1.16.2
