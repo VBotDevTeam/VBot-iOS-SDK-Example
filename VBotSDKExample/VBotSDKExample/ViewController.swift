@@ -1,74 +1,65 @@
-import MBProgressHUD
+//
+//  ViewController.swift
+//  VBotPhoneSDK
+//
+//  Created by 37604706 on 01/04/2024.
+//  Copyright (c) 2024 37604706. All rights reserved.
+//
+
 import UIKit
 import VBotPhoneSDK
 
-final class ViewController: UIViewController {
-    // MARK: - Types
+class ViewController: UIViewController {
+    private lazy var selectMemberButton = createButton(
+        title: "Chọn tài khoản",
+        backgroundColor: UIColor.systemMintCompat,
+        action: #selector(go_selectMember)
+    )
     
-    private enum Constants {
-        static let buttonHeight: CGFloat = 44
-        static let stackViewSpacing: CGFloat = 16
-        static let horizontalPadding: CGFloat = 20
-        static let cornerRadius: CGFloat = 4
-        static let fontSize: CGFloat = 16
-    }
+    private lazy var loginButton = createButton(
+        title: "Lưu",
+        backgroundColor: .systemBlue,
+        action: #selector(loginButton_tapped)
+    )
     
-    // MARK: - UI Components
+    private lazy var accountLabel = createLabel(
+        text: "Chưa chọn tài khoản",
+        textColor: .red
+    )
+    
+    private lazy var selectMemberToCallButton = createButton(
+        title: "Chọn tài khoản để gọi",
+        backgroundColor: .systemGreen,
+        action: #selector(go_selectMemberToCall)
+    )
+    
+    private lazy var callButton = createButton(
+        title: "Gọi",
+        backgroundColor: UIColor.systemMintCompat,
+        action: #selector(callButton_tapped)
+    )
+    
+    private lazy var line = createLine()
     
     private lazy var containerStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.axis = .vertical
-        stackView.spacing = Constants.stackViewSpacing
+        stackView.spacing = 16
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
         return stackView
     }()
     
-    private lazy var selectMemberButton = makeButton(
-        title: "Chọn thành viên kết nối",
-        backgroundColor: .systemMintCompat,
-        action: #selector(selectMemberTapped)
-    )
-    
-    private lazy var loginButton = makeButton(
-        title: "Kết nối",
-        backgroundColor: .systemBlue,
-        action: #selector(loginTapped)
-    )
-    
-    private lazy var accountLabel: UILabel = {
-        let label = makeLabel(text: "Đã ngắt kết nối", textColor: .red)
-        label.numberOfLines = 0
-        return label
-    }()
-    
-    private lazy var selectMemberToCallButton = makeButton(
-        title: "Chọn thành viên để gọi",
-        backgroundColor: .systemGreen,
-        action: #selector(selectMemberToCallTapped)
-    )
-    
-    private lazy var callButton = makeButton(
-        title: "Gọi",
-        backgroundColor: .systemMintCompat,
-        action: #selector(callTapped)
-    )
-    
-    // MARK: - Properties
-    
-    private let client: VBotPhone = .sharedInstance
+    private let client = VBotPhone.sharedInstance
     private var selectedMember: SDKMember?
     private var memberToCall: SDKMember?
     
-    // MARK: - Lifecycle
-    
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = .white
+        setupUI()
         setupView()
-        setupConstraints()
-        hideKeyboardWhenTappedAround()
-        updateViewState()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -76,256 +67,72 @@ final class ViewController: UIViewController {
         UIDevice.current.isProximityMonitoringEnabled = false
     }
     
-    // MARK: - Setup
-    
-    private func setupView() {
-        view.backgroundColor = .white
+    private func setupUI() {
         view.addSubview(containerStackView)
         
-        [accountLabel, selectMemberButton, loginButton,
-         makeSpacerView(), selectMemberToCallButton, callButton].forEach {
-            containerStackView.addArrangedSubview($0)
-        }
-    }
-    
-    private func setupConstraints() {
+        let items = [accountLabel, selectMemberButton, loginButton, line, selectMemberToCallButton, callButton]
+        
+        items.forEach { containerStackView.addArrangedSubview($0) }
+        
         NSLayoutConstraint.activate([
-            containerStackView.bottomAnchor.constraint(
-                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
-                constant: -Constants.horizontalPadding
-            ),
-            containerStackView.leadingAnchor.constraint(
-                equalTo: view.leadingAnchor,
-                constant: Constants.horizontalPadding
-            ),
-            containerStackView.trailingAnchor.constraint(
-                equalTo: view.trailingAnchor,
-                constant: -Constants.horizontalPadding
-            ),
+            containerStackView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20),
+            containerStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            containerStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
-            loginButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
-            accountLabel.heightAnchor.constraint(equalToConstant: Constants.buttonHeight),
-            selectMemberToCallButton.heightAnchor.constraint(equalToConstant: Constants.buttonHeight)
+            loginButton.heightAnchor.constraint(equalToConstant: 44),
+            accountLabel.heightAnchor.constraint(equalToConstant: 44),
+            selectMemberToCallButton.heightAnchor.constraint(equalToConstant: 44),
+            line.heightAnchor.constraint(equalToConstant: 44)
         ])
     }
     
-    // MARK: - State Management
-    
-    private func updateViewState() {
-        if client.isUserConnected() {
-            configureConnectedState()
+    private func setupView() {
+        if let loadedUser = getSDKMember() {
+            setupViewForLoggedInUser(loadedUser)
         } else {
-            configureDisconnectedState()
+            setupViewForLoggedOutUser()
         }
     }
     
-    private func configureConnectedState() {
+    private func setupViewForLoggedInUser(_ member: SDKMember) {
+        selectedMember = member
         selectMemberToCallButton.isEnabled = true
         selectMemberButton.isEnabled = true
-        loginButton.setTitle("Ngắt kết nối", for: .normal)
+        loginButton.setTitle("Xóa", for: .normal)
         loginButton.backgroundColor = .systemRed
         accountLabel.isHidden = false
         
-        updateAccountLabel()
-        updateSelectedMember()
-        callButton.isEnabled = memberToCall != nil
-    }
-    
-    private func configureDisconnectedState() {
-        selectMemberButton.isEnabled = true
-        selectMemberToCallButton.isEnabled = false
-        callButton.isEnabled = false
-        loginButton.setTitle("Kết nối", for: .normal)
-        loginButton.backgroundColor = .systemBlue
-        accountLabel.text = "Đã ngắt kết nối"
-        accountLabel.textColor = .red
-    }
-    
-    private func updateAccountLabel() {
-        let userName = client.userDisplayName() ?? ""
-        let attributedText = NSMutableAttributedString(
-            string: "Đã kết nối: ",
-            attributes: [
-                .font: UIFont.systemFont(ofSize: Constants.fontSize, weight: .regular),
-                .foregroundColor: UIColor.black
-            ]
-        )
+        let attributedText = NSMutableAttributedString(string: "Đã kết nối: ", attributes: [
+            .font: UIFont.systemFont(ofSize: 16, weight: .regular),
+            .foregroundColor: UIColor.black
+        ])
         
-        attributedText.append(
-            NSAttributedString(
-                string: userName,
-                attributes: [
-                    .font: UIFont.systemFont(ofSize: Constants.fontSize, weight: .medium),
-                    .foregroundColor: UIColor.systemTealCompat
-                ]
-            )
-        )
+        let userColor = UIColor.systemTealCompat
+        let userAttributes: [NSAttributedString.Key: Any] = [
+            .font: UIFont.systemFont(ofSize: 16, weight: .medium),
+            .foregroundColor: userColor
+        ]
         
+        attributedText.append(NSAttributedString(string: member.callName, attributes: userAttributes))
         accountLabel.attributedText = attributedText
-    }
-    
-    private func updateSelectedMember() {
-        guard let userToken = client.userToken(),
-              let member = findTestMember(byToken: userToken) else { return }
         
-        selectedMember = member
-        selectMemberButton.setTitle("Đã chọn: \(member.name)", for: .normal)
-        selectMemberButton.isEnabled = false
-    }
-    
-    // MARK: - Actions
-    
-    @objc private func selectMemberTapped() {
-        presentMemberSelection(forCall: false)
-    }
-    
-    @objc private func selectMemberToCallTapped() {
-        presentMemberSelection(forCall: true)
-    }
-    
-    @objc private func loginTapped() {
-        hideKeyboard()
+        if let member = findTestMember(byCallId: member.callId) {
+            selectedMember = member
+            selectMemberButton.setTitle("Đã chọn: \(member.callName)", for: .normal)
+            selectMemberButton.isEnabled = false
+        }
         
-        if client.isUserConnected() {
-            handleDisconnect()
-        } else if let token = selectedMember?.token, !token.isEmpty {
-            handleConnect(with: token)
+        if memberToCall != nil {
+            callButton.isEnabled = true
         }
     }
     
-    @objc private func callTapped() {
-        guard let member = memberToCall else { return }
-        initiateCall(to: member)
-    }
-    
-    // MARK: - Networking
-    
-    private func handleConnect(with token: String) {
-        showProgress()
-        client.connect(token: token) { [weak self] _, error in
-            guard let self = self else { return }
-            self.loginButton.isEnabled = true
-            self.hideProgress()
-            
-            if let error = error as NSError? {
-                self.showError(code: error.code, message: error.localizedDescription)
-                return
-            }
-            
-            self.registerPushToken()
-        }
-    }
-    
-    private func handleDisconnect() {
-        showProgress()
-        client.disconnect { [weak self] error in
-            guard let self = self else { return }
-            self.hideProgress()
-            
-            if let error = error as NSError? {
-                self.showError(code: error.code, message: error.localizedDescription)
-                return
-            }
-            
-            self.configureDisconnectedState()
-        }
-    }
-    
-    private func registerPushToken() {
-        guard let member = selectedMember else { return }
-        
-        addPushTokenInfo(member) { [weak self] error in
-            if let error = error as NSError? {
-                self?.showError(code: error.code, message: error.localizedDescription)
-                return
-            }
-            self?.configureConnectedState()
-        }
-    }
-    
-    private func initiateCall(to member: SDKMember) {
-        guard let selectedMember = selectedMember else { return }
-        
-        let checksum = generateChecksum(caller: selectedMember, callee: member)
-        client.startOutgoingCall(
-            callerId: "",
-            callerName: "",
-            calleeId: member.ext,
-            calleeAvatar: "https://avatar.iran.liara.run/public",
-            calleeName: member.name,
-            checkSum: checksum
-        ) { [weak self] error in
-            if let error = error as NSError? {
-                self?.showError(code: error.code, message: error.localizedDescription)
-            }
-        }
-    }
-    
-    // MARK: - Helper Methods
-    
-    private func makeButton(title: String, backgroundColor: UIColor, action: Selector) -> UIButton {
-        let button = UIButton(type: .system)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle(title, for: .normal)
-        button.addTarget(self, action: action, for: .touchUpInside)
-        button.backgroundColor = backgroundColor
-        button.layer.cornerRadius = Constants.cornerRadius
-        button.tintColor = .white
-        return button
-    }
-    
-    private func makeLabel(text: String, textColor: UIColor) -> UILabel {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.textAlignment = .center
-        label.text = text
-        label.textColor = textColor
-        return label
-    }
-    
-    private func makeSpacerView() -> UIView {
-        let view = UIView()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .white
-        return view
-    }
-    
-    private func presentMemberSelection(forCall: Bool) {
-        let viewController = SelectMemberViewController(delegate: self, toCall: forCall)
-        present(viewController.wrapToNavigationController(), animated: true)
-    }
-    
-    private func generateChecksum(caller: SDKMember, callee: SDKMember) -> String {
-        let uuid = UUID().uuidString
-        return "\(callee.code)-\(caller.code)-\(uuid)"
-    }
-    
-    private func showError(code: Int, message: String) {
-        let alert = UIAlertController(
-            title: "Lỗi",
-            message: "Code: \(code)\nMessage: \(message)",
-            preferredStyle: .alert
-        )
-        
-        alert.addAction(UIAlertAction(title: "Đóng", style: .default))
-        alert.addAction(
-            UIAlertAction(title: "Xóa dữ liệu", style: .destructive) { [weak self] _ in
-                VBotPhone.sharedInstance.delete {
-                    self?.configureDisconnectedState()
-                }
-            }
-        )
-        
-        present(alert, animated: true)
-    }
-    
-    
-    private func addPushTokenInfo(_ member: SDKMember, completion: @escaping (Error?) -> Void) {
-        let pushToken = VBotPhone.sharedInstance.pushToken() ?? ""
-        if  pushToken != ""  {
+    func addPushTokenInfo(_ member: SDKMember, completion: @escaping (Error?) -> Void) {
+        let pushToken = getPushToken() ?? ""
+        if pushToken != "" {
             let url = URL(string: "https://api-sandbox-h01.vbot.vn/example-sdk-xanhsm/sdk/push-token")!
             let isProduct = false
-            let parameters = "{\n \"isProduct\": \"\(isProduct)\",\n    \"deviceName\": \"\(member.name)\",\n    \"deviceId\": \"\(member.code)\",\n    \"token\": \"\(pushToken)\"\n}"
+            let parameters = "{\n \"userId\": \"\(member.callId)\",\n \"isProduct\": \"\(isProduct)\",\n    \"deviceName\": \"\(member.callName)\",\n    \"deviceId\": \"\(member.code)\",\n    \"token\": \"\(pushToken)\"\n}"
             let postData = parameters.data(using: .utf8)
             VBotLogger.debug(filter: "🐳 Example", "parameters: \(parameters)")
     
@@ -357,7 +164,6 @@ final class ViewController: UIViewController {
                     }
                 } catch {
                     VBotLogger.debug(filter: "🐳 Example", "Lỗi khi parse JSON: \(error) ")
-                    //                    let error = NSError(domain: "", code: 500, userInfo: [NSLocalizedDescriptionKey: "Lỗi parse JSON: \(error.localizedDescription) \n \(parameters)"])
                     DispatchQueue.main.async {
                         completion(nil)
                     }
@@ -371,22 +177,124 @@ final class ViewController: UIViewController {
         }
     }
     
-    private func findTestMember(byToken token: String) -> SDKMember? {
-        return TestAccount.first { $0.token == token }
+    func findTestMember(byCallId id: String) -> SDKMember? {
+        return TestAccount.first { $0.callId == id }
+    }
+    
+    private func setupViewForLoggedOutUser() {
+        selectMemberButton.isEnabled = true
+        selectMemberToCallButton.isEnabled = false
+        callButton.isEnabled = false
+        loginButton.setTitle("Lưu", for: .normal)
+        loginButton.backgroundColor = .systemBlue
+        accountLabel.text = "Chưa chọn tài khoản"
+        accountLabel.textColor = .red
+    }
+    
+    @objc private func go_selectMember() {
+        presentSelectMemberViewController(toCall: false)
+    }
+    
+    @objc private func go_selectMemberToCall() {
+        presentSelectMemberViewController(toCall: true)
+    }
+    
+    @objc private func loginButton_tapped() {
+        if getSDKMember() == nil {
+            saveMember()
+        } else {
+            deleteMember()
+        }
+    }
+    
+    @objc private func callButton_tapped() {
+        if let member = memberToCall {
+            makeCall(member)
+        }
+    }
+    
+    private func createButton(title: String, backgroundColor: UIColor, action: Selector) -> UIButton {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle(title, for: .normal)
+        button.addTarget(self, action: action, for: .touchUpInside)
+        button.backgroundColor = backgroundColor
+        button.layer.cornerRadius = 4
+        button.tintColor = .white
+        return button
+    }
+    
+    private func createLabel(text: String, textColor: UIColor) -> UILabel {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.text = text
+        label.textColor = textColor
+        return label
+    }
+    
+    private func createLine() -> UIView {
+        let view = UIView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .white
+        return view
+    }
+    
+    private func presentSelectMemberViewController(toCall: Bool) {
+        let vc = SelectMemberViewController(delegate: self, toCall: toCall)
+        present(vc.wrapToNavigationController(), animated: true)
+    }
+    
+    private func saveMember() {
+        showProgress()
+        addPushTokenInfo(selectedMember!) { [weak self] error in
+            guard let self = self else { return }
+            if let error = error as NSError? {
+                self.showError(code: error.code, message: error.localizedDescription)
+                return
+            }
+            saveSDKMember(self.selectedMember!)
+            self.hideProgress()
+            self.setupViewForLoggedInUser(self.selectedMember!)
+        }
+    }
+    
+    private func deleteMember() {
+        deleteSDKMember()
+        setupViewForLoggedOutUser()
+    }
+    
+    private func makeCall(_ member: SDKMember) {
+        client.startOutgoingCall(callerId: selectedMember!.callId, callerName: selectedMember!.callName, calleeId: member.callId, calleeAvatar: "https://avatar.iran.liara.run/public", calleeName: member.callName, checkSum: generateChecksum(for: member)) { [weak self] error in
+            guard let self = self else { return }
+            if let error = error as NSError? {
+                self.showError(code: error.code, message: error.localizedDescription)
+            }
+        }
+    }
+    
+    private func generateChecksum(for testNumber: SDKMember) -> String {
+        let uuidString = UUID().uuidString
+        return testNumber.code + "-" + selectedMember!.code + "-" + uuidString
+    }
+    
+    private func showError(code: Int, message: String) {
+        let errorMessage = UIAlertController(title: "Lỗi", message: "Code: \(code)\nMessage: \(message)", preferredStyle: .alert)
+        errorMessage.addAction(UIAlertAction(title: "Đóng", style: .default))
+        
+        present(errorMessage, animated: true)
     }
 }
-
-// MARK: - SelectMemberVCDelegate
 
 extension ViewController: SelectMemberVCDelegate {
     func didSelectMember(_ member: SDKMember, toCall: Bool) {
         if toCall {
             memberToCall = member
             callButton.isEnabled = true
-            selectMemberToCallButton.setTitle("Gọi cho: \(member.name)", for: .normal)
+            selectMemberToCallButton.setTitle("Gọi cho: \(member.callName)", for: .normal)
         } else {
             selectedMember = member
-            selectMemberButton.setTitle("Đã chọn: \(member.name)", for: .normal)
+            selectMemberButton.setTitle("Đã chọn: \(member.callName)", for: .normal)
         }
     }
 }

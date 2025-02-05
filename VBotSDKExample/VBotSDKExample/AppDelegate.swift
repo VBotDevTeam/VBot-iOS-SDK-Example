@@ -8,15 +8,13 @@
 
 import UIKit
 
-import VBotPhoneSDK
 import PushKit
-
-
+import VBotPhoneSDK
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
-    
+
     var voipRegistry: PKPushRegistry!
 
     class var shared: AppDelegate {
@@ -28,25 +26,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.rootViewController = ViewController()
         window?.makeKeyAndVisible()
-        
-       
+
         // Cấu hình cho SDK
         let config = VBotConfig(
             supportPopupCall: true, // Bật popup call trong cuộc gọi
-            iconTemplateImageData: UIImage(named: "callkit-icon")?.pngData()) // Icon cho màn hình CallKit
+            iconTemplateImageData: UIImage(named: "callkit-icon")?.pngData() // Icon cho màn hình CallKit
+        )
         // Khởi tạo SDK
-        VBotPhone.sharedInstance.setup(with: config)
-        
+        let token = "eyJhbGciOiJIU2zI1NiIsInR5cCI6IkpXVCJ9.eyJWYWsax1ZSI62IjEtMi0yLTIifQ.yH9TOT7hwsH3Z8w7pv7J60NzEsCY4vfK9sdf4qg8HBehT3eQw3"
+        VBotPhone.sharedInstance.setup(token: token, with: config)
+
         // Khởi tạo PKPushRegistry
         voipRegistry = PKPushRegistry(queue: .main)
         voipRegistry!.desiredPushTypes = [.voIP]
         voipRegistry!.delegate = self
 
-        setupObservers()
         return true
     }
 
@@ -59,59 +56,68 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(_ application: UIApplication) {}
 
     func applicationWillTerminate(_ application: UIApplication) {
-        removeObservers()
     }
 }
 
 // Lắng nghe các sự kiện cùa Pushkit
 extension AppDelegate: PKPushRegistryDelegate {
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
-        VBotPhone.sharedInstance.pushRegistry(registry, didUpdate: pushCredentials, for: type)
+        guard let token = registry.pushToken(for: .voIP) else {
+            VBotLogger.error(filter: "🍭 AppDelegate", "Không thể lấy token push")
+            return
+        }
+
+        let pushToken = token.map { String(format: "%.2hhx", $0) }.joined()
+        savePushToken(pushToken)
+        VBotLogger.debug(filter: "🍭 AppDelegate", "Nhận được token: \(token) \(pushToken)")
     }
 
     func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
-        VBotPhone.sharedInstance.pushRegistry(registry, didReceiveIncomingPushWith: payload, for: type, completion: completion)
+        
+        if type == .voIP {
+            let dictionaryPayload = payload.dictionaryPayload as? [String: Any] ?? [:]
+
+            VBotLogger.info(filter: "🍭 AppDelegate", "payload: \(dictionaryPayload)")
+
+            let metaData = dictionaryPayload["metaData"] as? [String: Any] ?? [:]
+            let checkSum = metaData["check_sum"] as? String ?? ""
+
+            let callerId = dictionaryPayload["callerId"] as? String ?? ""
+            let callerAvatar = dictionaryPayload["callerAvatar"] as? String ?? ""
+            let callerName = dictionaryPayload["callerName"] as? String ?? ""
+
+            let calleeId = dictionaryPayload["calleeId"] as? String ?? ""
+            let calleeAvatar = dictionaryPayload["calleeAvatar"] as? String ?? ""
+            let calleeName = dictionaryPayload["calleeName"] as? String ?? ""
+
+
+            VBotLogger.debug(filter: "🍭 AppDelegate", "Payload processed successfully | checkSum: \(checkSum)")
+
+            guard !callerId.isEmpty, !calleeId.isEmpty else {
+                VBotLogger.error(filter: "🍭 AppDelegate", "Invalid payload: missing callerId or calleeId")
+                completion() // Đảm bảo gọi completion ngay cả khi payload không hợp lệ
+                return
+            }
+
+            VBotPhone.sharedInstance.startIncomingCall(
+                callerId: callerId,
+                callerName: callerName,
+                callerAvatar: callerAvatar,
+                calleeId: calleeId,
+                calleeName: calleeName,
+                calleeAvatar: calleeAvatar,
+                checkSum: checkSum,
+                metaData: metaData,
+                completion: completion
+            )
+        } else {
+            completion()
+        }
+       
     }
 
     func pushRegistry(_ registry: PKPushRegistry, didInvalidatePushTokenFor type: PKPushType) {
-        VBotPhone.sharedInstance.pushRegistry(registry, didInvalidatePushTokenFor: type)
+        VBotLogger.error(filter: "🍭 AppDelegate", "didInvalidatePushTokenFor \(type)")
     }
 }
 
-extension AppDelegate: VBotPhoneDelegate {
-    func receivedApnsToken(token: String?) {}
-
-    func callInfoUpdated(user: CallUser) {}
-
-    func callInfoUpdated() {}
-
-    func messageButtonTapped() {}
-
-    func callStarted() {}
-
-    func callAccepted() {}
-
-    func callEnded() {}
-
-    func callMuteStateDidChange(muted: Bool) {}
-
-    func callHoldStateDidChange(isOnHold: Bool) {}
-
-    func callStateChanged(call: VBotCall) {}
-
-    @objc func showCallVC(_ notification: Notification? = nil) {}
-
-    @objc func hideCallVC(_ notification: Notification? = nil) {
-    }
-}
-
-private extension AppDelegate {
-    func setupObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(showCallVC), name: Notification.Name.VBotCallStarted, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(showCallVC), name: Notification.Name.VBotCallAccepted, object: nil)
-    }
-
-    func removeObservers() {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.VBotCallAccepted, object: nil)
-    }
-}

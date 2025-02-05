@@ -4,7 +4,6 @@ target 'VBotSDKExample' do
   use_frameworks!
   
   pod 'VBotPhoneSDK', :path => './Lib/VBotPhoneSDK'
-  pod 'MBProgressHUD', '~> 1.2.0'
   
   target 'VBotSDKExampleTests' do
     inherit! :search_paths

@@ -1,53 +1,47 @@
 import UIKit
-import VBotPhoneSDK
 
 protocol SelectMemberVCDelegate: AnyObject {
     func didSelectMember(_ member: SDKMember, toCall: Bool)
 }
 
 class SelectMemberViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    // MARK: - Properties
     private let collectionView: UICollectionView
     private weak var delegate: SelectMemberVCDelegate?
     private let toCall: Bool
     private let dataTable: [SDKMember]
     
-    // MARK: - Initializer
     init(delegate: SelectMemberVCDelegate?, toCall: Bool = false) {
         self.delegate = delegate
         self.toCall = toCall
         
-        let connectedName = VBotPhone.sharedInstance.userDisplayName() ?? ""
+        let connectedName = getSDKMember()?.callName ?? ""
         if toCall {
-            self.dataTable = TestAccount.filter { $0.name != connectedName }
+            self.dataTable = TestAccount.filter { $0.callName != connectedName }
         } else {
-            self.dataTable = TestAccount.filter { $0.type == .ios && $0.typeTest == .xanhsm && $0.name != connectedName }
+            self.dataTable = TestAccount.filter { $0.type == "ios" && $0.typeTest == "xanhsm" && $0.callName != connectedName }
         }
         
-        // Setup collection view layout
         let layout = UICollectionViewFlowLayout()
         layout.minimumInteritemSpacing = 10
         layout.minimumLineSpacing = 10
         layout.sectionInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         
-        // Initialize collection view with layout
-        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        self.collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         
         super.init(nibName: nil, bundle: nil)
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    // MARK: - View Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         setupView()
         setupCollectionView()
     }
     
-    // MARK: - Setup Methods
     private func setupView() {
         view.backgroundColor = .white
         title = toCall ? "Chọn để gọi" : "Chọn để kết nối"
@@ -70,7 +64,6 @@ class SelectMemberViewController: UIViewController, UICollectionViewDelegate, UI
         ])
     }
     
-    // MARK: - UICollectionViewDataSource
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return dataTable.count
     }
@@ -81,7 +74,6 @@ class SelectMemberViewController: UIViewController, UICollectionViewDelegate, UI
         return cell
     }
     
-    // MARK: - UICollectionViewDelegate
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if let delegate = delegate {
             delegate.didSelectMember(dataTable[indexPath.item], toCall: toCall)
@@ -89,16 +81,14 @@ class SelectMemberViewController: UIViewController, UICollectionViewDelegate, UI
         dismiss(animated: true)
     }
     
-    // MARK: - UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let spacing: CGFloat = 30 // Total spacing (left + right + between items)
+        let spacing: CGFloat = 30
         let availableWidth = collectionView.bounds.width - spacing
         let cellWidth = availableWidth / 2
         return CGSize(width: cellWidth, height: 60)
     }
 }
 
-// MARK: - MemberCollectionViewCell
 class MemberCollectionViewCell: UICollectionViewCell {
     private let nameLabel: UILabel = {
         let label = UILabel()
@@ -112,17 +102,17 @@ class MemberCollectionViewCell: UICollectionViewCell {
         setupCell()
     }
     
+    @available(*, unavailable)
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     private func setupCell() {
         contentView.backgroundColor = .white
-        contentView.layer.borderWidth = 1.0
-        contentView.layer.borderColor = UIColor.lightGray.cgColor.copy(alpha: 0.8)
         contentView.layer.cornerRadius = 4.0
         
         contentView.addSubview(nameLabel)
+        nameLabel.textColor = .white
         nameLabel.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
@@ -134,18 +124,17 @@ class MemberCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(with item: SDKMember) {
+        nameLabel.text = item.callName
         
-        nameLabel.text = item.name
-        
-        if item.typeTest == .xanhsm {
+        if item.typeTest == "xanhsm" {
             if #available(iOS 15.0, *) {
-                contentView.layer.borderColor = UIColor.systemTeal.cgColor.copy(alpha: 0.8)
+                contentView.backgroundColor = UIColor.systemTeal
             } else {
-                contentView.layer.borderColor = UIColor.yellow.cgColor.copy(alpha: 0.8)
+                contentView.backgroundColor = UIColor.yellow
             }
             
         } else {
-            contentView.layer.borderColor = UIColor.systemGreen.cgColor.copy(alpha: 0.8)
+            contentView.backgroundColor = UIColor.systemGreen
         }
     }
     

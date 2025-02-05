@@ -343,8 +343,6 @@ SWIFT_CLASS("_TtC12VBotPhoneSDK9VBotPhone")
 SWIFT_PROTOCOL("_TtP12VBotPhoneSDK17VBotPhoneDelegate_")
 @protocol VBotPhoneDelegate
 @optional
-/// Được gọi khi nhận được APNs token mới từ hệ thống
-- (void)receivedApnsTokenWithToken:(NSString * _Nullable)token;
 /// Được gọi khi trạng thái của cuộc gọi thay đổi
 - (void)callStateChangedWithCall:(VBotCall * _Nonnull)call;
 /// Được gọi khi một cuộc gọi đi mới bắt đầu
@@ -355,8 +353,6 @@ SWIFT_PROTOCOL("_TtP12VBotPhoneSDK17VBotPhoneDelegate_")
 - (void)callEnded;
 /// Được gọi khi trạng thái microphone thay đổi
 - (void)callMuteStateDidChangeWithMuted:(BOOL)muted;
-/// Được gọi khi trạng thái giữ máy thay đổi
-- (void)callHoldStateDidChangeWithIsOnHold:(BOOL)isOnHold;
 /// Được gọi khi người dùng nhấn vào nút nhắn tin
 - (void)messageButtonTapped;
 /// Được gọi khi thông tin người dùng trong cuộc gọi được cập nhật
@@ -736,8 +732,6 @@ SWIFT_CLASS("_TtC12VBotPhoneSDK9VBotPhone")
 SWIFT_PROTOCOL("_TtP12VBotPhoneSDK17VBotPhoneDelegate_")
 @protocol VBotPhoneDelegate
 @optional
-/// Được gọi khi nhận được APNs token mới từ hệ thống
-- (void)receivedApnsTokenWithToken:(NSString * _Nullable)token;
 /// Được gọi khi trạng thái của cuộc gọi thay đổi
 - (void)callStateChangedWithCall:(VBotCall * _Nonnull)call;
 /// Được gọi khi một cuộc gọi đi mới bắt đầu
@@ -748,8 +742,6 @@ SWIFT_PROTOCOL("_TtP12VBotPhoneSDK17VBotPhoneDelegate_")
 - (void)callEnded;
 /// Được gọi khi trạng thái microphone thay đổi
 - (void)callMuteStateDidChangeWithMuted:(BOOL)muted;
-/// Được gọi khi trạng thái giữ máy thay đổi
-- (void)callHoldStateDidChangeWithIsOnHold:(BOOL)isOnHold;
 /// Được gọi khi người dùng nhấn vào nút nhắn tin
 - (void)messageButtonTapped;
 /// Được gọi khi thông tin người dùng trong cuộc gọi được cập nhật

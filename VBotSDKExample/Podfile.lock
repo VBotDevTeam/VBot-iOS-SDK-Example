@@ -1,23 +1,23 @@
 PODS:
-  - MBProgressHUD (1.2.0)
-  - VBotPhoneSDK (1.4.0)
+  - Starscream (4.0.8)
+  - VBotPhoneSDK (1.5.0):
+    - Starscream (~> 4.0.8)
 
 DEPENDENCIES:
-  - MBProgressHUD (~> 1.2.0)
   - VBotPhoneSDK (from `./Lib/VBotPhoneSDK`)
 
 SPEC REPOS:
   trunk:
-    - MBProgressHUD
+    - Starscream
 
 EXTERNAL SOURCES:
   VBotPhoneSDK:
     :path: "./Lib/VBotPhoneSDK"
 
 SPEC CHECKSUMS:
-  MBProgressHUD: 3ee5efcc380f6a79a7cc9b363dd669c5e1ae7406
-  VBotPhoneSDK: c01be2467e99ed32519d7e5872e68f2f4ce9b4bb
+  Starscream: 19b5533ddb925208db698f0ac508a100b884a1b9
+  VBotPhoneSDK: 229eea926e5c34bf1a256e872cfc1deb88c9f9bc
 
-PODFILE CHECKSUM: b7a092f4912847eb99b5567c62d8d5c7edb629ee
+PODFILE CHECKSUM: 78c604c021057f2e43723d535df007f0248d7143
 
 COCOAPODS: 1.16.2

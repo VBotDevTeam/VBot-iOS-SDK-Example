@@ -97,9 +97,12 @@ public struct VBotConfig {
 }
 public struct VoIPPushPayload {
   public let uuid: Foundation.UUID
-  public let callerAvatar: Swift.String
-  public let callerName: Swift.String
   public let callerId: Swift.String
+  public let callerName: Swift.String
+  public let callerAvatar: Swift.String
+  public let calleeId: Swift.String
+  public let calleeName: Swift.String
+  public let calleeAvatar: Swift.String
   public let checkSum: Swift.String
 }
 @objc public class CallUser : ObjectiveC.NSObject {
@@ -255,13 +258,11 @@ extension VBotPhoneSDK.VBotReachability {
   public func stopNotifier()
 }
 @objc public protocol VBotPhoneDelegate {
-  @objc optional func receivedApnsToken(token: Swift.String?)
   @objc optional func callStateChanged(call: VBotPhoneSDK.VBotCall)
   @objc optional func callStarted()
   @objc optional func callAccepted()
   @objc optional func callEnded()
   @objc optional func callMuteStateDidChange(muted: Swift.Bool)
-  @objc optional func callHoldStateDidChange(isOnHold: Swift.Bool)
   @objc optional func messageButtonTapped()
   @objc optional func callInfoUpdated(user: VBotPhoneSDK.CallUser)
   @objc optional func networkIsUnreachable()
@@ -271,35 +272,23 @@ extension VBotPhoneSDK.VBotReachability {
   public static let sharedInstance: VBotPhoneSDK.VBotPhone
   public var audioOutput: VBotPhoneSDK.VBotAudioControllerOutputs?
   public var callUser: VBotPhoneSDK.CallUser?
-  public var appName: Swift.String?
+  public var token: Swift.String?
   public func addDelegate(_ delegate: any VBotPhoneSDK.VBotPhoneDelegate)
   public func removeDelegate(_ delegate: any VBotPhoneSDK.VBotPhoneDelegate)
   public func notifyDelegates(_ action: (any VBotPhoneSDK.VBotPhoneDelegate) -> Swift.Void)
-  public func setup(with config: VBotPhoneSDK.VBotConfig = VBotConfig())
+  public func setup(token: Swift.String, with config: VBotPhoneSDK.VBotConfig = VBotConfig())
   public func setConfig(config: VBotPhoneSDK.VBotConfig)
   public func getConfig() -> VBotPhoneSDK.VBotConfig
   public func setLocalizationStrings(_ data: VBotPhoneSDK.VBotLocalizedStrings)
   public func getLocalizedStrings() -> VBotPhoneSDK.VBotLocalizedStrings
-  public func connect(token: Swift.String, completion: @escaping (Swift.String?, (any Swift.Error)?) -> Swift.Void)
-  public func disconnect(completion: @escaping ((any Swift.Error)?) -> Swift.Void)
-  public func delete(completion: @escaping () -> Swift.Void)
-  public func isUserConnected() -> Swift.Bool
-  public func userDisplayName() -> Swift.String?
-  public func userToken() -> Swift.String?
   public func pushToken() -> Swift.String?
-  public func getHotlines(completion: @escaping ([VBotPhoneSDK.VBotHotline]?, (any Swift.Error)?) -> Swift.Void)
   public func returnToCallVC()
-  public func pushRegistry(_ registry: PushKit.PKPushRegistry, didUpdate pushCredentials: PushKit.PKPushCredentials, for type: PushKit.PKPushType)
-  public func pushRegistry(_ registry: PushKit.PKPushRegistry, didReceiveIncomingPushWith payload: PushKit.PKPushPayload, for type: PushKit.PKPushType, completion: @escaping () -> Swift.Void)
-  public func pushRegistry(_ registry: PushKit.PKPushRegistry, didInvalidatePushTokenFor type: PushKit.PKPushType)
   @objc public func callObserver(_ callObserver: CallKit.CXCallObserver, callChanged call: CallKit.CXCall)
-  public func setAppName(_ name: Swift.String)
   @objc deinit
 }
 extension VBotPhoneSDK.VBotPhone {
-  public func createError(description: Swift.String) -> Foundation.NSError
-  public func startCall(phoneNumber: Swift.String, name: Swift.String? = nil, avatar: Swift.String? = nil, checkSum: Swift.String? = nil, hotline: Swift.String? = nil, completion: @escaping ((any Swift.Error)?) -> Swift.Void)
-  public func startOutgoingCall(callerId: Swift.String, callerAvatar: Swift.String? = nil, callerName: Swift.String, calleeId: Swift.String, calleeAvatar: Swift.String? = nil, calleeName: Swift.String, checkSum: Swift.String? = nil, completion: @escaping ((any Swift.Error)?) -> Swift.Void)
+  public func startOutgoingCall(callerId: Swift.String, callerAvatar: Swift.String? = nil, callerName: Swift.String, calleeId: Swift.String, calleeAvatar: Swift.String? = nil, calleeName: Swift.String, checkSum: Swift.String, completion: @escaping ((any Swift.Error)?) -> Swift.Void)
+  public func startIncomingCall(callerId: Swift.String, callerName: Swift.String, callerAvatar: Swift.String? = nil, calleeId: Swift.String, calleeName: Swift.String, calleeAvatar: Swift.String? = nil, checkSum: Swift.String, metaData: [Swift.String : Any], completion: @escaping () -> Swift.Void)
   public func getActiveCall() -> VBotPhoneSDK.VBotCall?
   public func getFirstCall() -> VBotPhoneSDK.VBotCall?
   public func endCall(completion: @escaping ((any Swift.Error)?) -> Swift.Void)

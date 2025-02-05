@@ -7,9 +7,6 @@
 
 import Foundation
 import UIKit
-import MBProgressHUD
-
-// MARK: - UIColor Compatibility
 
 extension UIColor {
     static var systemMintCompat: UIColor {
@@ -39,27 +36,7 @@ extension UIViewController {
         return navigationController
     }
 
-    func hideKeyboardWhenTappedAround() {
-        let tapGesture = UITapGestureRecognizer(target: self,
-                                                action: #selector(hideKeyboard))
-        view.addGestureRecognizer(tapGesture)
-    }
 
-    @objc func hideKeyboard() {
-        view.endEditing(true)
-    }
-    
-    func showProgress() {
-        let hud = MBProgressHUD.showAdded(to: view, animated: true)
-        hud.mode = .indeterminate
-        hud.backgroundView.style = .solidColor
-        hud.backgroundView.color = UIColor(white: 0.0, alpha: 0.1)
-        hud.show(animated: true)
-    }
-    
-    func hideProgress() {
-        MBProgressHUD.hide(for: view, animated: true)
-    }
 }
 
 struct Res: Codable {
@@ -144,4 +121,53 @@ open class SPNavigationController: UINavigationController {
             }
         }
     }
+}
+
+
+class LoadingView: UIView {
+    private let activityIndicator = UIActivityIndicatorView()
+
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        setupView()
+    }
+
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        setupView()
+    }
+
+    private func setupView() {
+        self.backgroundColor = .clear
+        self.layer.cornerRadius = 10
+
+        activityIndicator.translatesAutoresizingMaskIntoConstraints = false
+        addSubview(activityIndicator)
+        activityIndicator.centerXAnchor.constraint(equalTo: centerXAnchor).isActive = true
+        activityIndicator.centerYAnchor.constraint(equalTo: centerYAnchor).isActive = true
+
+        activityIndicator.startAnimating()
+    }
+}
+
+extension UIViewController {
+    func showProgress() {
+           DispatchQueue.main.async {
+               if let _ = self.view.viewWithTag(999) {
+                   return
+               }
+
+               let loadingView = LoadingView(frame: self.view.bounds)
+               loadingView.tag = 999
+               self.view.addSubview(loadingView)
+           }
+       }
+
+       func hideProgress() {
+           DispatchQueue.main.async {
+               if let loadingView = self.view.viewWithTag(999) {
+                   loadingView.removeFromSuperview()
+               }
+           }
+       }
 }
