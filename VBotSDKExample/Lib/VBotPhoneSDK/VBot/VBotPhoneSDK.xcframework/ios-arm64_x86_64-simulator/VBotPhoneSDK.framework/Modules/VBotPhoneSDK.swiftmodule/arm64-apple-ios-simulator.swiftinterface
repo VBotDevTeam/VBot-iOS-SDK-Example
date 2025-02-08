@@ -1,7 +1,7 @@
 // swift-interface-format-version: 1.0
-// swift-compiler-version: Apple Swift version 6.0.3 effective-5.10 (swiftlang-6.0.3.1.10 clang-1600.0.30.1)
-// swift-module-flags: -target arm64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -enable-bare-slash-regex -module-name VBotPhoneSDK
-// swift-module-flags-ignorable: -no-verify-emitted-module-interface
+// swift-compiler-version: Apple Swift version 5.9 (swiftlang-5.9.0.128.108 clang-1500.0.40.1)
+// swift-module-flags: -target arm64-apple-ios12.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name VBotPhoneSDK
+// swift-module-flags-ignorable: -enable-bare-slash-regex
 import AVFAudio
 import AVFoundation
 import AVKit
@@ -48,29 +48,29 @@ extension CoreFoundation.CGRect {
   public func pinnedToVerticalEdge(of boundingRect: CoreFoundation.CGRect) -> CoreFoundation.CGRect
 }
 extension UIKit.UIView {
-  @_Concurrency.MainActor @preconcurrency public var left: CoreFoundation.CGFloat {
+  @_Concurrency.MainActor(unsafe) public var left: CoreFoundation.CGFloat {
     get
   }
-  @_Concurrency.MainActor @preconcurrency public var right: CoreFoundation.CGFloat {
+  @_Concurrency.MainActor(unsafe) public var right: CoreFoundation.CGFloat {
     get
   }
-  @_Concurrency.MainActor @preconcurrency public var top: CoreFoundation.CGFloat {
+  @_Concurrency.MainActor(unsafe) public var top: CoreFoundation.CGFloat {
     get
   }
-  @_Concurrency.MainActor @preconcurrency public var bottom: CoreFoundation.CGFloat {
+  @_Concurrency.MainActor(unsafe) public var bottom: CoreFoundation.CGFloat {
     get
   }
-  @_Concurrency.MainActor @preconcurrency public var width: CoreFoundation.CGFloat {
+  @_Concurrency.MainActor(unsafe) public var width: CoreFoundation.CGFloat {
     get
   }
-  @_Concurrency.MainActor @preconcurrency public var height: CoreFoundation.CGFloat {
+  @_Concurrency.MainActor(unsafe) public var height: CoreFoundation.CGFloat {
     get
   }
 }
 extension UIKit.UIView {
-  @_Concurrency.MainActor @preconcurrency public func animateDecelerationToVerticalEdge(withDuration duration: Foundation.TimeInterval, velocity: CoreFoundation.CGPoint, velocityThreshold: CoreFoundation.CGFloat = 500, boundingRect: CoreFoundation.CGRect, completion: ((Swift.Bool) -> Swift.Void)? = nil)
-  @_Concurrency.MainActor @preconcurrency public func setIsHidden(_ isHidden: Swift.Bool, animated: Swift.Bool, completion: ((Swift.Bool) -> Swift.Void)? = nil)
-  @_Concurrency.MainActor @preconcurrency public func setIsHidden(_ isHidden: Swift.Bool, withAnimationDuration duration: Foundation.TimeInterval, completion: ((Swift.Bool) -> Swift.Void)? = nil)
+  @_Concurrency.MainActor(unsafe) public func animateDecelerationToVerticalEdge(withDuration duration: Foundation.TimeInterval, velocity: CoreFoundation.CGPoint, velocityThreshold: CoreFoundation.CGFloat = 500, boundingRect: CoreFoundation.CGRect, completion: ((Swift.Bool) -> Swift.Void)? = nil)
+  @_Concurrency.MainActor(unsafe) public func setIsHidden(_ isHidden: Swift.Bool, animated: Swift.Bool, completion: ((Swift.Bool) -> Swift.Void)? = nil)
+  @_Concurrency.MainActor(unsafe) public func setIsHidden(_ isHidden: Swift.Bool, withAnimationDuration duration: Foundation.TimeInterval, completion: ((Swift.Bool) -> Swift.Void)? = nil)
 }
 extension CoreFoundation.CGPoint {
   public var length: CoreFoundation.CGFloat {
@@ -88,19 +88,11 @@ extension UIKit.UIView.AnimationCurve {
     get
   }
 }
-#if compiler(>=5.3) && $NoncopyableGenerics
 extension Swift.Optional where Wrapped == UIKit.UIView.AnimationCurve {
   public var asAnimationOptions: UIKit.UIView.AnimationOptions {
     get
   }
 }
-#else
-extension Swift.Optional where Wrapped == UIKit.UIView.AnimationCurve {
-  public var asAnimationOptions: UIKit.UIView.AnimationOptions {
-    get
-  }
-}
-#endif
 public struct VBotConfig {
   public init(supportPopupCall: Swift.Bool = true, iconTemplateImageData: Foundation.Data? = nil)
 }
@@ -147,7 +139,7 @@ public enum SocketMethod : Swift.String, Swift.CaseIterable {
   public init?(rawValue: Swift.String)
   public typealias AllCases = [VBotPhoneSDK.SocketMethod]
   public typealias RawValue = Swift.String
-  nonisolated public static var allCases: [VBotPhoneSDK.SocketMethod] {
+  public static var allCases: [VBotPhoneSDK.SocketMethod] {
     get
   }
   public var rawValue: Swift.String {
@@ -296,8 +288,8 @@ extension VBotPhoneSDK.VBotReachability {
   @objc deinit
 }
 extension VBotPhoneSDK.VBotPhone {
-  public func startOutgoingCall(callerId: Swift.String, callerAvatar: Swift.String? = nil, callerName: Swift.String, calleeId: Swift.String, calleeAvatar: Swift.String? = nil, calleeName: Swift.String, checkSum: Swift.String, completion: @escaping ((any Swift.Error)?) -> Swift.Void)
-  public func startIncomingCall(callerId: Swift.String, callerName: Swift.String, callerAvatar: Swift.String? = nil, calleeId: Swift.String, calleeName: Swift.String, calleeAvatar: Swift.String? = nil, checkSum: Swift.String, metaData: [Swift.String : Any], completion: @escaping () -> Swift.Void)
+  public func startOutgoingCall(callerId: Swift.String, callerAvatar: Swift.String? = nil, callerName: Swift.String, calleeId: Swift.String, calleeAvatar: Swift.String? = nil, calleeName: Swift.String, checkSum: Swift.String, metaData: [Swift.String : Any]? = nil, completion: @escaping ((any Swift.Error)?) -> Swift.Void)
+  public func startIncomingCall(callerId: Swift.String, callerName: Swift.String, callerAvatar: Swift.String? = nil, calleeId: Swift.String, calleeName: Swift.String, calleeAvatar: Swift.String? = nil, checkSum: Swift.String, metaData: [Swift.String : Any]? = nil, completion: @escaping () -> Swift.Void)
   public func getActiveCall() -> VBotPhoneSDK.VBotCall?
   public func getFirstCall() -> VBotPhoneSDK.VBotCall?
   public func endCall(completion: @escaping ((any Swift.Error)?) -> Swift.Void)

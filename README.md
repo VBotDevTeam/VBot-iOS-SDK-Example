@@ -82,12 +82,13 @@ File **AppDelegate.swift**
 let config = VBotConfig(
             supportPopupCall: true,
             iconTemplateImageData: UIImage(named: "callkit-icon")?.pngData())
-            
+
 VBotPhone.sharedInstance.setup(token: token, with: config)
 ```
 
 Trong đó:
-- **token** là App Token, đại diện cho ứng dụng của bạn được dùng để xác thực với máy chủ VBot 
+
+- **token** là App Token, đại diện cho ứng dụng của bạn được dùng để xác thực với máy chủ VBot
 - **config** là cấu hình tùy chọn cho SDK
 
 ### Gọi đi
@@ -96,13 +97,14 @@ Trong đó:
 
 ```swift
 VBotPhone.sharedInstance.startOutgoingCall(
-    callerId: <Mã người gọi>, 
-  callerName: <Tên người gọi>, 
-  callerAvatar: <Ảnh đại diện người gọi>, 
-  calleeId: <Mã người nghe>, 
-  calleeName: <Tên người nghe>, 
-  calleeAvatar: <Ảnh đại diện người nghe>, 
-  checkSum: <Mã xác thực cuộc gọi>) 
+    callerId: <Mã người gọi>,
+  callerName: <Tên người gọi>,
+  callerAvatar: <Ảnh đại diện người gọi>,
+  calleeId: <Mã người nghe>,
+  calleeName: <Tên người nghe>,
+  calleeAvatar: <Ảnh đại diện người nghe>,
+  checkSum: <Mã xác thực cuộc gọi>,
+   metaData: <MetaData của cuộc gọi>)
   {
       [weak self] error in
     guard let self = self else { return }
@@ -114,27 +116,28 @@ VBotPhone.sharedInstance.startOutgoingCall(
 ```
 
 ### Gọi đến
+
 Để nhận cuộc gọi đến
 Trong hàm **pushRegistry didReceiveIncomingPushWith** hãy sử dụng hàm **startIncomingCall**
 
 ```swift
-func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) 
+func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void)
     {
-  
+
       // Xử lý payload
         ...
-    
+
     // Truyền dữ liệu sau khi xử lý vào hàm khởi tạo của của VBot SDK
         VBotPhone.sharedInstance.startIncomingCall(
-            callerId: <Mã người gọi>, 
-          callerName: <Tên người gọi>, 
-          callerAvatar: <Ảnh đại diện người gọi>, 
-          calleeId: <Mã người nghe>, 
-          calleeName: <Tên người nghe>, 
-          calleeAvatar: <Ảnh đại diện người nghe>, 
+            callerId: <Mã người gọi>,
+          callerName: <Tên người gọi>,
+          callerAvatar: <Ảnh đại diện người gọi>,
+          calleeId: <Mã người nghe>,
+          calleeName: <Tên người nghe>,
+          calleeAvatar: <Ảnh đại diện người nghe>,
           checkSum: <Mã xác thực cuộc gọi>,
       metaData: <MetaData của cuộc gọi>
-      completion: completion) 
+      completion: completion)
   }
 ```
 
@@ -158,10 +161,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let config = VBotConfig(
             supportPopupCall: true, // Bật popup call trong cuộc gọi
             iconTemplateImageData: UIImage(named: "callkit-icon")?.pngData()) // Icon cho màn hình CallKit
-            
+
         // Token
         let token = "1scn3fk..3co4vb0"
-        
+
         // Khởi tạo SDK
         VBotPhone.sharedInstance.setup(token: token, with: config)
 
@@ -181,29 +184,29 @@ extension AppDelegate: PKPushRegistryDelegate {
     func pushRegistry(_ registry: PKPushRegistry, didUpdate pushCredentials: PKPushCredentials, for type: PKPushType) {
         // Lưu push token mà server cần để gửi thông báo VoIP đến thiết bị
     }
-    
+
       // Gọi khi ứng dụng nhận được một thông báo VoIP push từ Apple Push Notification Service (APNs).
     func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
-        
+
         // Xử lý payload
         ...
-    
+
         // Truyền dữ liệu sau khi xử lý vào hàm khởi tạo của của VBot SDK
       if type == .voIP {
         VBotPhone.sharedInstance.startIncomingCall(
-          callerId: <Mã người gọi>, 
-          callerName: <Tên người gọi>, 
-          callerAvatar: <Ảnh đại diện người gọi>, 
-          calleeId: <Mã người nghe>, 
-          calleeName: <Tên người nghe>, 
-          calleeAvatar: <Ảnh đại diện người nghe>, 
+          callerId: <Mã người gọi>,
+          callerName: <Tên người gọi>,
+          callerAvatar: <Ảnh đại diện người gọi>,
+          calleeId: <Mã người nghe>,
+          calleeName: <Tên người nghe>,
+          calleeAvatar: <Ảnh đại diện người nghe>,
           checkSum: <Mã xác thực cuộc gọi>,
           metaData: <MetaData của cuộc gọi>
-          completion: completion) 
+          completion: completion)
       }
-      
+
     }
-        
+
     // Gọi khi hệ thống thu hồi (invalidate) push token của ứng dụng.
     func pushRegistry(_ registry: PKPushRegistry, didInvalidatePushTokenFor type: PKPushType) {}
 }
@@ -231,6 +234,7 @@ VBotPhone.sharedInstance.setLocalizationStrings(strings)
 Từ ứng dụng của bạn, có thể gọi vào các hàm khác nhau của VBot SDK để thực hiện các hành động trong cuộc gọi
 
 Ví dụ:
+
 ```swift
 VBotPhone.sharedInstance.getActiveCall()
 ```
