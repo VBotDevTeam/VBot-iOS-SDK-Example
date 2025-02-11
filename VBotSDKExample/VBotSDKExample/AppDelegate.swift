@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             iconTemplateImageData: UIImage(named: "callkit-icon")?.pngData() // Icon cho màn hình CallKit
         )
         // Khởi tạo SDK
-        let token = <Token>
+        let token = "GJBl72G3DC063CazhdGrtT/wllQ6eKSrBdzlm410VnwXyLobZijB2WdQ08Fw9WoEHnVnOOO0Cv/2KzpAQ5mrCMjHNFfe6jaOz/uVl8+sp15VEcqvnTzDYDcAzwl8xMJ1MIewVxAzWK+kCPhC+hMzseDp"
         VBotPhone.sharedInstance.setup(token: token, with: config)
 
         // Khởi tạo PKPushRegistry
