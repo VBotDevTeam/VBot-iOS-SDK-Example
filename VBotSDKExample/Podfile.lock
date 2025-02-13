@@ -2,10 +2,12 @@ PODS:
   - CocoaLumberjack (3.8.5):
     - CocoaLumberjack/Core (= 3.8.5)
   - CocoaLumberjack/Core (3.8.5)
+  - CryptoSwift (1.8.4)
   - Reachability (3.7.6)
   - Starscream (4.0.8)
   - VBotPhoneSDK (1.5.0):
     - CocoaLumberjack (~> 3.8.5)
+    - CryptoSwift (~> 1.8.4)
     - Reachability (~> 3.7.6)
     - Starscream (~> 4.0.8)
 
@@ -15,6 +17,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - CocoaLumberjack
+    - CryptoSwift
     - Reachability
     - Starscream
 
@@ -24,9 +27,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   CocoaLumberjack: 6a459bc897d6d80bd1b8c78482ec7ad05dffc3f0
+  CryptoSwift: e64e11850ede528a02a0f3e768cec8e9d92ecb90
   Reachability: fd0ecd23705e2599e4cceeb943222ae02296cbc6
   Starscream: 19b5533ddb925208db698f0ac508a100b884a1b9
-  VBotPhoneSDK: 578525e51bc35243f38945b66c346ac27dda6d60
+  VBotPhoneSDK: dbcbfd8a3899577415f5d2450cd0305816b902fb
 
 PODFILE CHECKSUM: 71d936119fe8501dcfe6f63d469c71c56e094717
 
